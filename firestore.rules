@@ -1,0 +1,16 @@
+service cloud.firestore {
+  match /databases/{database}/documents {
+    match /{document=**} {
+      allow read, write: if request.auth.uid != null;
+    }
+    match /meta/{metadata} {
+      allow read, write;
+    }
+    match /users/{userdata} {
+      allow read, write;
+    }
+    match /colors/{color} {
+      allow read, write;
+    }
+  }
+}
