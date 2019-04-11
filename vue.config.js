@@ -1,8 +1,12 @@
 module.exports = {
   pluginOptions: {
     electronBuilder: {
-      outputDir: 'dist',
-      removeElectronJunk: false
+      outputDir: 'asteroid',
+      removeElectronJunk: false,
+      shortcutName: 'Asteroid',
+      icon: 'build/icon.png',
+      productName: 'Asteroid',
+      name: 'Asteroid'
     }
   }
 }
