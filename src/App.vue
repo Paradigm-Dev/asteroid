@@ -21,7 +21,7 @@
     </v-system-bar>
 
     <!-- Toolbar -->
-		<v-toolbar dark app :class="{ 'toolbar-no-ld': !lockdown, 'red': lockdown }">
+		<v-toolbar dark app :class="{ 'toolbar-no-ld': !lockdown, 'red': lockdown, 'text-select-disable': lockdown || !lockdown }">
 			<v-toolbar-side-icon @click="drawer = !drawer" v-if="$root.userPresent && !lockdown && !fourofour && !$root.isBanned"></v-toolbar-side-icon>
 			<v-toolbar-title>
 				<img style="height: 45px;" src="./assets/asteroidlogo.png" class="hidden-xs-only logo">
