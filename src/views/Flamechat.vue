@@ -1,6 +1,6 @@
 <template>
 	<div class="flamechat">
-		<v-toolbar dense color="deep-orange darken-2" v-if="flamechatEnable" dark>
+		<v-toolbar dense color="deep-orange darken-2" v-if="flamechatEnable">
 			<v-toolbar-title>Flamechat</v-toolbar-title>
 			<v-spacer></v-spacer>
 			<v-btn v-if="$root.isAdmin && $root.accountColor && ready && chatroom" flat @click="clearAllMessages()">Purge</v-btn>

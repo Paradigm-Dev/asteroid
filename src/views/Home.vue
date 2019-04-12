@@ -14,14 +14,14 @@
 	  	<h1 class="display-3 deep-purple--text font-weight-thin text-uppercase" style="margin-bottom: 25px;">HEY!</h1>
 		  <h5 class="headline pb-2 white--text">Have <span class="font-weight-bold">YOU</span> read the notice?</h5>
 		  <p class="white--text">It contains vital information pertaining to your Paradigm account. Be sure to read and acknowledge it.</p>
-		  <v-btn dark router to="/company/notice" color="deep-purple">Read the Notice</v-btn>
+		  <v-btn router to="/company/notice" color="deep-purple">Read the Notice</v-btn>
 		</div>
 		<v-parallax src="https://relay.theparadigmdev.com/img/Outer_Space.jpg" style="padding: 25px; height: 275px;">
 			<div style="text-align: center;">
 				<h1 class="display-3 deep-orange--text font-weight-thin text-uppercase" style="margin-bottom: 25px;">Flamechat</h1>
 				<h5 class="headline pb-2 white--text">A common sense chatting app.</h5>
 				<p class="white--text">A chatting app built for the future.</p>
-				<v-btn dark router to="/flame" color="deep-orange">Open Flamechat</v-btn>
+				<v-btn router to="/flame" color="deep-orange">Open Flamechat</v-btn>
 			</div>
 		</v-parallax>
 		<h1 class="display-3 blue--text font-weight-thin text-uppercase" style="margin: 25px; text-align: center;">Updates</h1>

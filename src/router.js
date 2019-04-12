@@ -11,7 +11,6 @@ import Hex from './views/Hex'
 import Launchpad from './views/Launchpad'
 import Scorecard from './views/Scorecard'
 import Support from './views/Company/Support'
-import PageNotFound from './views/404'
 import News from './views/News'
 import Satellite from './views/Satellite'
 import Movies from './views/Movies'
@@ -126,7 +125,7 @@ export default new Router({
 		},
 		{
 			path:'*',
-			component: PageNotFound
+			redirect: '/home'
 		},
 		{
 			path: '/latest/memes',
