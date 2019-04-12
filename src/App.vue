@@ -1,7 +1,7 @@
 <template>
   <v-app dark>
     <!-- System toolbar -->
-    <v-system-bar window app style="-webkit-app-region: drag;" class="grey darken-4 text-select-disable">
+    <v-system-bar window app style="-webkit-app-region: drag;" class="grey darken-4">
       <div style="-webkit-app-region: no-drag">
         <v-icon @click="reload()" v-ripple class="toolbar-icon">refresh</v-icon>
         <v-icon @click="goBack()" v-ripple class="toolbar-icon">arrow_back</v-icon>
@@ -21,7 +21,7 @@
     </v-system-bar>
 
     <!-- Toolbar -->
-		<v-toolbar app :class="{ 'toolbar-no-ld': !lockdown, 'red': lockdown, 'text-select-disable': lockdown || !lockdown }">
+		<v-toolbar app :class="{ 'toolbar-no-ld': !lockdown, 'red': lockdown }">
 			<v-toolbar-side-icon @click="drawer = !drawer" v-if="$root.userPresent && !lockdown && !fourofour && !$root.isBanned"></v-toolbar-side-icon>
 			<v-toolbar-title>
 				<img style="height: 45px;" src="./assets/asteroidlogo.png" class="hidden-xs-only logo">
@@ -267,11 +267,6 @@
 
 		<!-- Snackbar -->
 		<v-snackbar v-model="$root.snackbar" bottom left :timeout="2000">{{ $root.feedback }}</v-snackbar>
-
-		<!-- Footer -->
-		<v-footer>
-			<div><span class="pl-2" style="text-align: center;">&copy; {{ new Date().getFullYear() }} Paradigm Development, Inc.</span></div>
-		</v-footer>
   </v-app>
 </template>
 
@@ -779,15 +774,12 @@ export default {
 
 html {
   overflow-y: auto;
-}
-
-.text-select-disable {
-  -webkit-touch-callout: none;
-    -webkit-user-select: none;
-     -khtml-user-select: none;
-       -moz-user-select: none;
-        -ms-user-select: none;
-            user-select: none;
+	-webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 .toolbar-icon {
