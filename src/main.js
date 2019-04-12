@@ -9,7 +9,6 @@ import store from './store'
 import firebase from 'firebase'
 import LogRocket from 'logrocket'
 import db from './firestore'
-import './registerServiceWorker'
 
 Vue.use(VueAnalytics, {
 	id: 'UA-52752236-3',
