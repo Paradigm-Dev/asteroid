@@ -3,7 +3,6 @@ import './plugins/vuetify'
 import App from './App.vue'
 import router from './router'
 import VueChatScroll from 'vue-chat-scroll'
-import VueFriendlyIframe from 'vue-friendly-iframe';
 import VueAnalytics from 'vue-analytics'
 import store from './store'
 import firebase from 'firebase'
@@ -15,7 +14,6 @@ Vue.use(VueAnalytics, {
 	router
 })
 
-Vue.component('vue-friendly-iframe', VueFriendlyIframe);
 Vue.config.productionTip = false
 
 Vue.use(VueChatScroll)

@@ -702,7 +702,7 @@ export default {
 
 /* Track */
 ::-webkit-scrollbar-track {
-  background: rgb(40, 40, 40);
+  background: rgb(33, 33, 33);
 }
 
 /* Handle */
