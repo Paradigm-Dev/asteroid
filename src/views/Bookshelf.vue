@@ -4,7 +4,7 @@
 			<div class="title" style="margin: 26px 0px 50px 0px; text-align: center;">
 				<h1 class="display-3 blue--text font-weight-thin text-uppercase">Bookshelf</h1>
 				<h6 class="headline red--text font-weight-thin">Rights to the items listed below are reserved for their creators.</h6>
-				<v-text-field v-model="searchBook" label="Search..." style="width: 300px; margin: 50px auto 0px auto;" hint="Case sensitive"></v-text-field>
+				<v-text-field v-model="searchBook" label="Search..." style="width: 300px; margin: 50px auto 0px auto;"></v-text-field>
 			</div>
 			<div class="bookshelf">
 				<v-card v-for="(book, index) in filteredBook" :key="index" class="book-item">
@@ -113,7 +113,7 @@ export default {
 	computed: {
 		filteredBook() {
 			return this.bookshelf.filter(book => {
-				return book.title.match(this.searchBook) || book.author.match(this.searchBook)
+				return book.title.toLowerCase().includes(this.searchBook.toLowerCase()) || book.author.toLowerCase().includes(this.searchBook.toLowerCase())
 			})
 		}
 	},

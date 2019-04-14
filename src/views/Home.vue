@@ -10,6 +10,14 @@
 			<h5 class="headline pb-2 font-weight-thin grey--text">a typical example or pattern of something, a model</h5>
 			<p class="grey--text lighten-4 font-weight-light pt-2">We strive to create consistent and well-made products for our users while adopting the newest and best web development standards.</p>
 		</div>
+		<v-parallax src="https://cbspittsburgh.files.wordpress.com/2019/04/masters-augusta-12th-green-1.jpg?w=1024" style="padding: 25px; height: 275px;">
+			<div style="text-align: center;">
+				<h1 class="display-3 green--text font-weight-thin text-uppercase" style="margin-bottom: 25px;">The Masters</h1>
+				<h5 class="headline pb-2 yellow--text">A tradition unlike any other.</h5>
+				<p class="white--text">View the leaderboard on Scorecard now.</p>
+				<v-btn router to="/scorecard" color="green">Open Scorecard</v-btn>
+			</div>
+		</v-parallax>
 		<div style="text-align: center; padding: 25px;" class="grey darken-4">
 	  	<h1 class="display-3 deep-purple--text font-weight-thin text-uppercase" style="margin-bottom: 25px;">HEY!</h1>
 		  <h5 class="headline pb-2 white--text">Have <span class="font-weight-bold">YOU</span> read the notice?</h5>

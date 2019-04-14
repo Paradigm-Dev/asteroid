@@ -295,7 +295,8 @@ export default {
 				{ text: 'Asteroid', route: '/asteroid' },
 				{ text: 'Bookshelf', route: '/bookshelf' },
 				{ text: 'Movies', route: '/movies' },
-				{ text: 'Music', route: '/music' }
+				{ text: 'Music', route: '/music' },
+				{ text: 'Scorecard', route: '/scorecard' }
 			],
 			company: [
 				{ text: 'Support', route: '/company/support' },
