@@ -117,10 +117,10 @@
 							<v-form>
 								<v-text-field autocomplete="off" type="text" name="username" v-model="$root.username" label="Username" :rules="usernameRules"></v-text-field>
 								<v-text-field autocomplete="off" type="password" name="password" v-model="password" label="Password" :rules="passRules"></v-text-field>
-								<v-text-field autocomplete="off" type="text" name="bio" v-model="accountBio" label="Bio"></v-text-field>
+								<v-text-field autocomplete="off" type="text" name="bio" v-model="$root.accountBio" label="Bio"></v-text-field>
 								<swatches style="width: 100%; height: 100%; background-color: #2E2E2E; overflow-y: hidden;" v-model="$root.accountColor" />
 								<v-checkbox label="I have read and accept the Terms and Conditions" v-model="terms"></v-checkbox>
-								<v-btn href="http://relay.theparadigmdev.com/terms.html">View Terms</v-btn>
+								<v-btn href="https://relay.theparadigmdev.com/terms.html">View Terms</v-btn>
 								<v-btn @click="signUp" color="primary">Sign Up</v-btn>
 							</v-form>
 						</v-tab-item>
@@ -226,6 +226,8 @@
 					<v-switch @click="fourofourToggle" v-model="fourofour" style="flex: none !important;" label="404" color="deep-purple"></v-switch>
 					<v-switch @click="toggleFc" v-model="flamechatEnable" style="flex: none !important;" label="Flamechat" color="deep-orange"></v-switch>
 					<v-switch @click="toggleFcHTML" v-model="flamechatHTML" style="flex: none !important;" label="Flamechat HTML" color="deep-orange"></v-switch>
+					<v-divider></v-divider>
+					<v-btn flat color="blue-grey" router to="/admin/users" @click="adminDialog = false">Users</v-btn>
 				</v-card-text>
 				<v-divider></v-divider>
 				<v-card-actions>
