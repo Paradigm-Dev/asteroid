@@ -4,7 +4,7 @@
 			<div class="title" style="margin: 26px 0px 50px 0px; text-align: center;">
 				<h1 class="display-3 blue--text font-weight-thin text-uppercase">Music</h1>
 				<h6 class="headline red--text font-weight-thin">Rights to the items listed below are reserved for their creators.</h6>
-				<v-text-field v-model="searchMusic" label="Search..." style="width: 300px; margin: 50px auto 0px auto;" hint="Case sensitive"></v-text-field>
+				<v-text-field v-model="searchMusic" label="Search..." style="width: 300px; margin: 50px auto 0px auto;"></v-text-field>
 			</div>
 			<div class="music">
 				<v-card v-for="(item, index) in filteredMusic" :key="index" class="music-item">
@@ -119,7 +119,7 @@ export default {
 	computed: {
 		filteredMusic() {
 			return this.music.filter(item => {
-				return item.title.match(this.searchMusic) || item.album.match(this.searchMusic) || item.author.match(this.searchMusic) || item.genre.match(this.searchMusic)
+				return item.title.toLowerCase().includes(this.searchMusic.toLowerCase()) || item.album.toLowerCase().includes(this.searchMusic.toLowerCase()) || item.author.toLowerCase().includes(this.searchMusic.toLowerCase()) || item.genre.toLowerCase().includes(this.searchMusic.toLowerCase())
 			})
 		}
 	},

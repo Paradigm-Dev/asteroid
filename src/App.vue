@@ -244,9 +244,9 @@
 			<v-container fluid style="padding: 0;">
 				<router-view v-if="$root.userPresent && !lockdown && !fourofour && !$root.isBanned"></router-view>
 				<div class="noUser" v-if="!$root.userPresent &&!lockdown && !fourofour" style="text-align: center;">
-					<h1 class="display-3 red--text font-weight-thin text-uppercase" style="margin: 100px 0px 25px 0px;">No User is Logged In</h1>
+					<h1 class="display-3 deep-purple--text font-weight-thin text-uppercase" style="margin: 100px 0px 25px 0px;">Welcome!</h1>
 					<h3 class="headline font-weight-light" style="margin: 25px;">Please login to continue.</h3>
-					<v-btn color="primary" @click="dialog = true">Login</v-btn>
+					<v-btn color="deep-purple" @click="dialog = true">Login</v-btn>
 				</div>
 				<div class="lockdown" v-if="lockdown" style="text-align: center;">
 					<v-icon style="font-size: 75px; margin-top: 100px;" color="red">block</v-icon>
@@ -579,6 +579,7 @@ export default {
 		}
   },
   created() {
+		firebase.auth().setPersistence(firebase.auth.Auth.Persistence.SESSION)
 		this.$root.loadingBar = true
 		firebase.auth().onAuthStateChanged(firebaseUser => {
 			if(firebaseUser) {

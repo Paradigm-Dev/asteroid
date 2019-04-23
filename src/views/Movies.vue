@@ -4,7 +4,7 @@
 			<div class="title" style="margin: 26px 0px 50px 0px; text-align: center;">
 				<h1 class="display-3 blue--text font-weight-thin text-uppercase">Movies</h1>
 				<h6 class="headline red--text font-weight-thin">Rights to the items listed below are reserved for their creators.</h6>
-				<v-text-field v-model="searchMovie" label="Search..." style="width: 300px; margin: 50px auto 0px auto;" hint="Case sensitive"></v-text-field>
+				<v-text-field v-model="searchMovie" label="Search..." style="width: 300px; margin: 50px auto 0px auto;"></v-text-field>
 			</div>
 			<div class="movies">
 				<v-card v-for="(movie, index) in filteredMovie" :key="index" class="movie-item">
@@ -20,7 +20,7 @@
 					<v-card-text>{{ movie.summary }}</v-card-text>
 
 					<v-card-actions>
-						<v-btn v-if="movie.available" flat color="accent" :href="movie.link" @click="logMovie(movie.title)">Watch</v-btn>
+						<v-btn v-if="movie.available" flat color="accent" @click="watchMovie(movie.title, movie.link, movie.cover)">Watch</v-btn>
 						<span v-if="!movie.available" class="red--text font-weight-medium" style="margin: 6px;">UNAVAILABLE</span>
 					</v-card-actions>
 				</v-card>
@@ -52,6 +52,19 @@
 				</v-card-actions>
 			</v-card>
 		</v-dialog>
+
+		<v-dialog v-model="watchMovieDialog" max-width="1000">
+			<v-card>
+				<v-card-title>
+					<h3 class="headline mb-0">{{ watchMovieTitle }}</h3>
+					<v-spacer></v-spacer>
+					<v-btn icon @click="watchMovieDialog = false" class="dialog-close-btn">
+						<v-icon>close</v-icon>
+					</v-btn>
+				</v-card-title>
+				<video autoplay :poster="watchMovieCover" width="1000" :src="watchMovieURL" controls></video>
+			</v-card>
+		</v-dialog>
   </div>
 </template>
 
@@ -69,7 +82,11 @@ export default {
 			newMovieTitle: '',
 			newMovieSummary: '',
 			newMovieCover: '',
-			newMovieGenre: ''
+			newMovieGenre: '',
+			watchMovieTitle: '',
+			watchMovieURL: '',
+			watchMovieDialog: false,
+			watchMovieCover: ''
     }
   },
   created() {
@@ -113,7 +130,7 @@ export default {
 	computed: {
 		filteredMovie() {
 			return this.movies.filter(movie => {
-				return movie.title.match(this.searchMovie) || movie.genre.match(this.searchMovie)
+				return movie.title.toLowerCase().includes(this.searchMovie.toLowerCase()) || movie.genre.toLowerCase().includes(this.searchMovie.toLowerCase())
 			})
 		}
 	},
@@ -143,6 +160,13 @@ export default {
 				this.$root.feedback = 'Fill in all of the fields'
 				this.$root.snackbar = true
 			}
+		},
+		watchMovie(title, url, cover) {
+			this.watchMovieTitle = title
+			this.watchMovieURL = url
+			this.watchMovieCover = cover
+			this.watchMovieDialog = true
+			this.logMovie(title)
 		}
 	}
 }
@@ -186,5 +210,12 @@ div.v-card.movie-item {
 	position: absolute;
 	bottom: 0px;
 	margin-top: 16px;
+}
+
+video {
+	position: relative;
+	bottom: -6px;
+  width: 100%;
+  height: auto;
 }
 </style>
