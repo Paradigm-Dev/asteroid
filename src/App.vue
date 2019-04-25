@@ -53,38 +53,56 @@
 				<v-toolbar-title>Menu</v-toolbar-title>
 			</v-toolbar>
 
-			<v-list>
+			<v-list two-line>
 				<v-list-tile v-for="link in apps" :key="link.route" router :to="link.route" :ripple="{ class: 'grey--text' }">
-					<v-list-tile-title class="font-weight-light">{{ link.text }}</v-list-tile-title>
+					<v-list-tile-content>
+            <v-list-tile-title v-html="link.app"></v-list-tile-title>
+            <v-list-tile-sub-title v-html="link.text"></v-list-tile-sub-title>
+          </v-list-tile-content>
 				</v-list-tile>
 
 				<v-list-group>
 					<v-list-tile slot="activator">
-						<v-list-tile-title class="font-weight-black">Company</v-list-tile-title>
+						<v-list-tile-content>
+							<v-list-tile-title>Company</v-list-tile-title>
+						</v-list-tile-content>
 					</v-list-tile>
 
 					<v-list-tile v-for="link in company" :key="link.route" router :to="link.route" :ripple="{ class: 'grey--text' }">
-						<v-list-tile-title class="font-weight-light">{{ link.text }}</v-list-tile-title>
+						<v-list-tile-content>
+							<v-list-tile-title v-html="link.app"></v-list-tile-title>
+							<v-list-tile-sub-title v-html="link.text"></v-list-tile-sub-title>
+						</v-list-tile-content>
 					</v-list-tile>
 				</v-list-group>
 
 				<v-list-group>
 					<v-list-tile slot="activator">
-						<v-list-tile-title class="font-weight-black">Latest</v-list-tile-title>
+						<v-list-tile-content>
+							<v-list-tile-title>Latest</v-list-tile-title>
+						</v-list-tile-content>
 					</v-list-tile>
 
 					<v-list-tile v-for="link in latest" :key="link.route" router :to="link.route" :ripple="{ class: 'grey--text' }">
-						<v-list-tile-title class="font-weight-light">{{ link.text }}</v-list-tile-title>
+						<v-list-tile-content>
+							<v-list-tile-title v-html="link.app"></v-list-tile-title>
+							<v-list-tile-sub-title v-html="link.text"></v-list-tile-sub-title>
+						</v-list-tile-content>
 					</v-list-tile>
 				</v-list-group>
 
 				<v-list-group>
 					<v-list-tile slot="activator">
-						<v-list-tile-title class="font-weight-black">Developers</v-list-tile-title>
+						<v-list-tile-content>
+							<v-list-tile-title>For developers</v-list-tile-title>
+						</v-list-tile-content>
 					</v-list-tile>
 
 					<v-list-tile v-for="link in developers" :key="link.route" router :to="link.route" :ripple="{ class: 'grey--text' }">
-						<v-list-tile-title class="font-weight-light">{{ link.text }}</v-list-tile-title>
+						<v-list-tile-content>
+							<v-list-tile-title v-html="link.app"></v-list-tile-title>
+							<v-list-tile-sub-title v-html="link.text"></v-list-tile-sub-title>
+						</v-list-tile-content>
 					</v-list-tile>
 				</v-list-group>
 			</v-list>
@@ -107,28 +125,28 @@
 						<v-tab>Sign In</v-tab>
 						<v-tab-item>
 							<v-form>
-								<v-text-field autocomplete="off" type="text" name="username" v-model="$root.username" label="Username" :rules="usernameRules"></v-text-field>
-								<v-text-field autocomplete="off" type="password" name="password" v-model="password" label="Password" :rules="passRules"></v-text-field>
+								<v-text-field autocomplete="off" type="text" name="username" v-model="$root.username" label="Username"></v-text-field>
+								<v-text-field autocomplete="off" type="password" name="password" v-model="password" label="Password"></v-text-field>
 								<v-btn @click="signIn" color="primary">Sign In</v-btn>
 							</v-form>
 						</v-tab-item>
 						<v-tab>Sign Up</v-tab>
 						<v-tab-item>
 							<v-form>
-								<v-text-field autocomplete="off" type="text" name="username" v-model="$root.username" label="Username" :rules="usernameRules"></v-text-field>
-								<v-text-field autocomplete="off" type="password" name="password" v-model="password" label="Password" :rules="passRules"></v-text-field>
+								<v-text-field autocomplete="off" type="text" name="username" v-model="$root.username" label="Username"></v-text-field>
+								<v-text-field autocomplete="off" type="password" name="password" v-model="password" label="Password"></v-text-field>
 								<v-text-field autocomplete="off" type="text" name="bio" v-model="$root.accountBio" label="Bio"></v-text-field>
 								<swatches style="width: 100%; height: 100%; background-color: #2E2E2E; overflow-y: hidden;" v-model="$root.accountColor" />
 								<v-checkbox label="I have read and accept the Terms and Conditions" v-model="terms"></v-checkbox>
 								<v-btn href="https://relay.theparadigmdev.com/terms.html">View Terms</v-btn>
-								<v-btn @click="signUp" color="primary">Sign Up</v-btn>
+								<v-btn @click="signUp()" color="primary">Sign Up</v-btn>
 							</v-form>
 						</v-tab-item>
 					</v-tabs>
 
 					<v-form v-if="!$root.userPresent && !signUpAvail">
-						<v-text-field autocomplete="off" type="text" name="username" v-model="$root.username" label="Username" :rules="usernameRules"></v-text-field>
-						<v-text-field autocomplete="off" type="password" name="password" v-model="password" label="Password" :rules="passRules"></v-text-field>
+						<v-text-field autocomplete="off" type="text" name="username" v-model="$root.username" label="Username"></v-text-field>
+						<v-text-field autocomplete="off" type="password" name="password" v-model="password" label="Password"></v-text-field>
 					</v-form>
 
 					<div v-if="$root.userPresent">
@@ -170,7 +188,7 @@
 			<v-card>
 				<v-card-title><h3 class="headline mb-0">Change Password</h3></v-card-title>
 				<v-card-text>
-					<v-text-field autocomplete="off" type="password" name="newPassword" v-model="newPassword" label="New Password" :rules="passRules"></v-text-field>
+					<v-text-field autocomplete="off" type="password" name="newPassword" v-model="newPassword" label="New Password"></v-text-field>
 				</v-card-text>
 				<v-divider></v-divider>
 				<v-card-actions>
@@ -289,42 +307,35 @@ export default {
       maximized: remote.getCurrentWindow().isMaximized(),
       drawer: false,
 			apps: [
-				{ text: 'Home', route: '/home' },
-				{ text: 'Flamechat', route: '/flame' },
-				{ text: 'The Paradox', route: '/paradox' },
-				{ text: 'Hex', route: '/hex' },
-				{ text: 'Satellite', route: '/satellite'},
-				{ text: 'Asteroid', route: '/asteroid' },
-				{ text: 'Bookshelf', route: '/bookshelf' },
-				{ text: 'Movies', route: '/movies' },
-				{ text: 'Music', route: '/music' },
-				{ text: 'Scorecard', route: '/scorecard' }
+				{ text: 'Home', route: '/home', app: 'Paradigm' },
+				{ text: 'Chat with a friend', route: '/flame', app: 'Flamechat' },
+				{ text: 'Read the news', route: '/paradox', app: 'The Paradox' },
+				{ text: 'Share your work', route: '/hex', app: 'Hex' },
+				{ text: 'Browse the Internet', route: '/satellite', app: 'Satellite' },
+				{ text: 'Paradigm premium subscription', route: '/asteroid', app: 'Asteroid' },
+				{ text: 'See the latest scores', route: '/scorecard', app: 'Scorecard' },
+				{ text: 'Store your files', route: '/drawer', app: 'Drawer' },
+				{ text: 'Books, movies, music, and TV shows', route: '/media', app: 'Media' }
 			],
 			company: [
-				{ text: 'Support', route: '/company/support' },
-				{ text: 'Notice', route: '/company/notice' },
-				{ text: 'Roadmap', route: '/company/roadmap' },
-				{ text: 'Terms', route: '/company/terms' },
-				{ text: 'Network Status', route: '/company/status' },
-				{ text: 'About', route: '/company/about' }
+				{ text: 'Get some help', route: '/company/support', app: 'Support' },
+				{ text: 'For your information', route: '/company/notice', app: 'Notice' },
+				{ text: 'What&#39s coming soon', route: '/company/roadmap', app: 'Roadmap' },
+				{ text: 'Read it', route: '/company/terms', app: 'Terms of Use, Service, and Privacy Policy' },
+				{ text: 'Company status', route: '/company/status', app: 'Network Status' },
+				{ text: 'About us', route: '/company/about', app: 'About' }
 			],
 			latest: [
-				{ text: 'Memes', route: '/latest/memes' },
-				{ text: 'Rocco', route: '/latest/rocco' }
+				{ text: 'Have a laugh', route: '/latest/memes', app: 'Latest Memes' },
+				{ text: 'Unavailable', route: '/latest/rocco', app: 'Latest of Rocco' }
 			],
 			developers: [
-				{ text: 'Contracts', route: '/dev/contracts' },
-				{ text: 'Relay', route: '/dev/relay' },
-				{ text: 'Databank', route: '/dev/databank' },
+				{ text: 'Have us build you a website', route: '/dev/contracts', app: 'Contracting' },
+				{ text: 'Host your website', route: '/dev/relay', app: 'Relay' },
+				{ text: 'Add a database to your website', route: '/dev/databank', app: 'Databank' },
 			],
 			password: '',
 			dialog: false,
-			usernameRules: [
-				value => value.length >= 3 || 'Minimum length is 3 characters',
-			],
-			passRules: [
-				value => value.length >= 8 || 'Minimum length is 8 characters'
-			],
 			userInfo: null,
 			newPassword: null,
 			signUpAvail: null,
@@ -388,7 +399,7 @@ export default {
 						this.$root.feedback = 'Please check your password.'
 						this.$root.snackbar = true
 					}
-					if(error.code == 'auth/invalid-email' || 'auth/wrong-password') {
+					if(error.code != 'auth/invalid-email' || 'auth/wrong-password') {
 						this.$root.feedback = error.message
 						this.$root.snackbar = true
 					}
@@ -401,19 +412,8 @@ export default {
 		signUp() {
 			if(this.$root.username && this.password && this.terms && this.$root.accountBio && this.$root.accountColor) {
 				firebase.auth().createUserWithEmailAndPassword(this.$root.username + '@theparadigmdev.com', this.password).then(user => {
-					db.collection('users').doc(this.$root.username).set({
-						bio: this.$root.accountBio,
-						color: this.$root.accountColor,
-						moonrocks: 0,
-						isAdmin: false,
-						isInnerCore: false,
-						isAsteroid: false,
-						isAnalytics: false,
-						uid: user.uid,
-						isBanned: false,
-						strikes: 0,
-						isWriter: false
-					})
+					console.log(user)
+					this.$root.accountUID = user.uid
 					this.$ga.event(this.$root.username, 'signed up')
 					this.inquiryEvent(this.$root.username, 'signed up', '$account', this.$root.accountColor)
 				}).catch(error => {
@@ -429,6 +429,21 @@ export default {
 						this.$root.feedback = error.message
 						this.$root.snackbar = true
 					}
+				})
+				db.collection('users').doc(this.$root.username).set({
+					bio: this.$root.accountBio,
+					color: this.$root.accountColor.hex,
+					moonrocks: 0,
+					isAdmin: false,
+					isInnerCore: false,
+					isAsteroid: false,
+					isAnalytics: false,
+					uid: this.$root.accountUID,
+					isBanned: false,
+					strikes: 0,
+					isWriter: false
+				}).catch(error => {
+					console.error(error)
 				})
 			} else {
 				this.$root.feedback = 'Please fill in the required fields.'
@@ -463,16 +478,16 @@ export default {
 			this.inquiryEvent(this.$root.username, 'deleted their account', '$account', this.$root.accountColor)
 			firebase.auth().currentUser.delete().then(() => {
 				// User deleted.
-				db.collection('users').doc(this.$root.username).delete().then(() => {
-					this.$root.username = null
-					this.userInfo = null
-					this.$root.userPresent = false
-				})
 				this.$root.feedback = 'Account deleted sucessfully.'
 				this.$root.snackbar = true
 			}).catch(error => {
 				// An error happened.
 				console.log(error)
+			})
+			db.collection('users').doc(this.$root.username).delete().then(() => {
+				this.$root.username = null
+				this.userInfo = null
+				this.$root.userPresent = false
 			})
 			this.deleteDialog = false
 			this.dialog = false
@@ -735,7 +750,7 @@ export default {
 }
 
 .toolbar-no-ld {
-	background: linear-gradient(to right, #542478 0%, #011949 100%);
+	background: linear-gradient(135deg, #162fa1 0%, #50336e 100%);
 }
 
 .v-input--switch {
@@ -757,7 +772,8 @@ export default {
 
 .loading-bar {
 	position: absolute;
-	bottom: -14px;
+	bottom: 0px;
+	margin-bottom: 0px;
 }
 
 .logo {
@@ -777,7 +793,7 @@ export default {
 }
 
 html {
-  overflow-y: auto;
+  overflow-y: auto !important;
 	-webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;

@@ -1,8 +1,8 @@
 <template>
 	<div class="satellite">
 		<v-text-field label="Web Address" v-model="input"></v-text-field>
-		<v-btn flat icon @click="changeURL()"><v-icon>send</v-icon></v-btn>
-		<iframe id="satellite-embed" crossorigin="anonymous" :src="output"></iframe>
+		<!-- <v-btn flat icon @click="changeURL()"><v-icon>send</v-icon></v-btn> -->
+		<iframe id="satellite-embed" crossorigin="anonymous" :src="input"></iframe>
 	</div>
 </template>
 
@@ -12,7 +12,7 @@ export default {
 	data() {
 		return {
 			proxy: 'https://cors.io/?',
-			input: 'https://www.google.com/',
+			input: 'https://www.bing.com/',
 			output: 'https://cors.io/?https://www.google.com/'
 		}
 	},

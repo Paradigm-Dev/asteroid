@@ -2,8 +2,6 @@
   <div class="index">
 		<v-container>
 			<div class="title" style="margin: 26px 0px 50px 0px; text-align: center;">
-				<h1 class="display-3 blue--text font-weight-thin text-uppercase">Bookshelf</h1>
-				<h6 class="headline red--text font-weight-thin">Rights to the items listed below are reserved for their creators.</h6>
 				<v-text-field v-model="searchBook" label="Search..." style="width: 300px; margin: 50px auto 0px auto;"></v-text-field>
 			</div>
 			<div class="bookshelf">
@@ -18,8 +16,7 @@
 					<v-divider></v-divider>
 					<v-card-text>{{ book.summary }}</v-card-text>
 					<v-card-actions>
-						<v-btn v-if="book.available" flat color="accent" :href="book.link" @click="logBook(book.title)">Read</v-btn>
-						<span v-if="!book.available" class="red--text font-weight-medium" style="margin: 6px;">UNAVAILABLE</span>
+						<v-btn flat color="accent" :disabled="!book.available" :href="book.link" @click="logBook(book.title)">Read</v-btn>
 					</v-card-actions>
 				</v-card>
 			</div>

@@ -57,7 +57,8 @@ Vue.mixin({
       feedback: '',
       snackbar: false,
       isWriter: false,
-      loadingBar: false
+      loadingBar: false,
+      accountUID: ''
     }
   }
 })

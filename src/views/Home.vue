@@ -75,6 +75,8 @@ export default {
 <style scoped>
 .parallax {
 	height: 100% !important;
+	position: relative;
+	top: 0px;
 }
 
 .home {

@@ -2,8 +2,6 @@
   <div class="index">
 		<v-container>
 			<div class="title" style="margin: 26px 0px 50px 0px; text-align: center;">
-				<h1 class="display-3 blue--text font-weight-thin text-uppercase">Music</h1>
-				<h6 class="headline red--text font-weight-thin">Rights to the items listed below are reserved for their creators.</h6>
 				<v-text-field v-model="searchMusic" label="Search..." style="width: 300px; margin: 50px auto 0px auto;"></v-text-field>
 			</div>
 			<div class="music">
@@ -20,9 +18,9 @@
 					<v-card-text v-if="item.available">
 						<v-audio :file="item.link"></v-audio>
 					</v-card-text>
-					<v-card-actions v-if="!item.available">
-						<span class="red--text font-weight-medium" style="margin: 6px; text-align: center;">UNAVAILABLE</span>
-					</v-card-actions>
+					<v-card-text style="text-align: center;" v-if="!item.available">
+						<span class="red--text font-weight-medium" style="position: relative; top: +100px;">UNAVAILABLE</span>
+					</v-card-text>
 				</v-card>
 			</div>
 		</v-container>
