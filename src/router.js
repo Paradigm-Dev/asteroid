@@ -25,6 +25,7 @@ import About from './views/Company/About'
 import UserControl from './views/Admin/UserControl'
 import LatestRocco from './views/Latest/Rocco'
 import Media from './views/Media'
+import Weather from './views/Weather'
 
 Vue.use(Router)
 
@@ -164,6 +165,11 @@ export default new Router({
 			path: '/media',
 			name: 'Media',
 			component: Media
+		},
+		{
+			path: '/weather',
+			name: 'Weather',
+			component: Weather
 		}
   ]
 })

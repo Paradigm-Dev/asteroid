@@ -315,7 +315,8 @@ export default {
 				{ text: 'Paradigm premium subscription', route: '/asteroid', app: 'Asteroid' },
 				{ text: 'See the latest scores', route: '/scorecard', app: 'Scorecard' },
 				{ text: 'Store your files', route: '/drawer', app: 'Drawer' },
-				{ text: 'Books, movies, music, and TV shows', route: '/media', app: 'Media' }
+				{ text: 'Books, movies, music, and TV shows', route: '/media', app: 'Media' },
+				{ text: 'What&#39s the weather', route: '/weather', app: 'Weather' }
 			],
 			company: [
 				{ text: 'Get some help', route: '/company/support', app: 'Support' },
