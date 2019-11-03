@@ -2,7 +2,7 @@
   <div class="index">
 		<v-container>
 			<div class="title" style="margin: 26px 0px 50px 0px; text-align: center;">
-				<v-text-field v-model="searchTV" label="Search..." style="width: 300px; margin: 50px auto 0px auto;"></v-text-field>
+				<v-text-field v-model="searchShow" label="Search..." style="width: 300px; margin: 50px auto 0px auto;"></v-text-field>
 			</div>
 			<div class="shows">
 				<v-card v-for="(show, index) in filteredShows" :key="index" class="tv-item">
@@ -11,14 +11,14 @@
 					<v-card-title primary-title>
 						<div>
 							<h3 class="headline mb-0">{{ show.title }}</h3>
-							<h4 class="subheading grey--text">{{ show.genre }}</h4>
+							<h4 class="subtitle-1 grey--text">{{ show.genre }}</h4>
 						</div>
 					</v-card-title>
 					<v-divider></v-divider>
 					<v-card-text>{{ show.summary }}</v-card-text>
 
 					<v-card-actions>
-						<v-btn :disabled="!show.available" flat color="accent" @click="watchShow(show.title, show.link, show.cover)">Watch</v-btn>
+						<v-btn :disabled="!show.available" text color="accent" @click="watchShow(show.title, show.link, show.cover)">Watch</v-btn>
 					</v-card-actions>
 				</v-card>
 			</div>
@@ -45,7 +45,7 @@
 				</v-card-text>
 				<v-divider></v-divider>
 				<v-card-actions>
-					<v-btn :disabled="!newShowTitle || !newShowGenre || !newShowSummary || !newShowCover" flat color="accent" @click="submitShow()">Submit</v-btn>
+					<v-btn :disabled="!newShowTitle || !newShowGenre || !newShowSummary || !newShowCover" text color="accent" @click="submitShow()">Submit</v-btn>
 				</v-card-actions>
 			</v-card>
 		</v-dialog>
@@ -66,8 +66,7 @@
 </template>
 
 <script>
-import db from './../firestore'
-import firebase from 'firebase'
+import { db } from '@/firebase'
 
 export default {
   name: 'TV',
@@ -134,7 +133,6 @@ export default {
 	methods: {
 		logShow(show) {
 			this.$ga.event(this.$root.username, 'is watching ' + show)
-			this.inquiryEvent(this.$root.username, 'is watching ' + show, 'TV Shows', this.$root.accountColor)
 		},
 		submitShow() {
 			if (this.newShowTitle && this.newShowSummary && this.newShowCover && this.newShowGenre) {
@@ -146,7 +144,6 @@ export default {
 					link: '',
 					genre: this.newShowGenre
 				}).then(() => {
-					this.inquiryEvent(this.$root.username, 'requested ' + this.newShowTitle + ' to be added', 'TV Shows', this.$root.accountColor)
 					this.newShowDialog = false
 					this.newShowTitle = ''
 					this.newShowSummary = ''

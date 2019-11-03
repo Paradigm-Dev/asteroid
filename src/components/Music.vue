@@ -10,7 +10,7 @@
 					<v-card-title primary-title>
 						<div>
 							<h3 class="headline mb-0">{{ item.title }}</h3>
-							<h4 class="subheading grey--text">{{ item.author }}&nbsp;&nbsp;|&nbsp;&nbsp;{{ item.album }}</h4>
+							<h4 class="subtitle-1 grey--text">{{ item.author }}&nbsp;&nbsp;|&nbsp;&nbsp;{{ item.album }}</h4>
 							<h4 class="body-2 grey--text">{{ item.genre }}</h4>
 						</div>
 					</v-card-title>
@@ -49,7 +49,7 @@
 				</v-card-text>
 				<v-divider></v-divider>
 				<v-card-actions>
-					<v-btn :disabled="!newMusicAlbum || !newMusicArtist || !newMusicCover || !newMusicGenre || !newMusicTitle" flat color="accent" @click="submitSong()">Submit</v-btn>
+					<v-btn :disabled="!newMusicAlbum || !newMusicArtist || !newMusicCover || !newMusicGenre || !newMusicTitle" text color="accent" @click="submitSong()">Submit</v-btn>
 				</v-card-actions>
 			</v-card>
 		</v-dialog>
@@ -58,7 +58,7 @@
 
 <script>
 import vAudio from './../components/vAudio'
-import db from './../firestore'
+import { db } from '@/firebase'
 
 export default {
   name: 'Music',
@@ -124,7 +124,6 @@ export default {
 	methods: {
 		logMusic(music) {
 			this.$ga.event('Music', this.$root.username + ' is listening to ' + music)
-			this.inquiryEvent(this.$root.username, 'is listening to ' + music, 'Music', this.$root.accountColor)
 		},
 		submitSong() {
 			if (this.newMusicTitle && this.newMusicAlbum && this.newMusicArtist && this.newMusicCover && this.newMusicGenre) {
@@ -137,7 +136,6 @@ export default {
 					link: '',
 					genre: this.newMusicGenre
 				}).then(() => {
-					this.inquiryEvent(this.$root.username, 'requested ' + this.newMusicTitle + ' by ' + this.newMusicArtist + ' to be added', 'Music', this.$root.accountColor)
 					this.newMusicDialog = false
 					this.newMusicTitle = ''
 					this.newMusicAlbum = ''

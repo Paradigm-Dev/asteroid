@@ -6,13 +6,18 @@
 </template>
 
 <script>
+import { db, storage } from '@/firebase'
+
 export default {
   name: 'Drawer',
   data() {
     return {
 
     }
-	}
+	},
+	created() {
+
+  }
 }
 </script>
 

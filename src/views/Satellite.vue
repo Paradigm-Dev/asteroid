@@ -1,7 +1,7 @@
 <template>
 	<div class="satellite">
 		<v-text-field label="Web Address" v-model="input"></v-text-field>
-		<!-- <v-btn flat icon @click="changeURL()"><v-icon>send</v-icon></v-btn> -->
+		<!-- <v-btn text icon @click="changeURL()"><v-icon>send</v-icon></v-btn> -->
 		<iframe id="satellite-embed" crossorigin="anonymous" :src="input"></iframe>
 	</div>
 </template>

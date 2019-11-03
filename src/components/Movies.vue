@@ -11,14 +11,14 @@
 					<v-card-title primary-title>
 						<div>
 							<h3 class="headline mb-0">{{ movie.title }}</h3>
-							<h4 class="subheading grey--text">{{ movie.genre }}</h4>
+							<h4 class="subtitle-1 grey--text">{{ movie.genre }}</h4>
 						</div>
 					</v-card-title>
 					<v-divider></v-divider>
 					<v-card-text>{{ movie.summary }}</v-card-text>
 
 					<v-card-actions>
-						<v-btn :disabled="!movie.available" flat color="accent" @click="watchMovie(movie.title, movie.link, movie.cover)">Watch</v-btn>
+						<v-btn :disabled="!movie.available" text color="accent" @click="watchMovie(movie.title, movie.link, movie.cover)">Watch</v-btn>
 					</v-card-actions>
 				</v-card>
 			</div>
@@ -45,7 +45,7 @@
 				</v-card-text>
 				<v-divider></v-divider>
 				<v-card-actions>
-					<v-btn :disabled="!newMovieTitle || !newMovieGenre || !newMovieSummary || !newMovieCover" flat color="accent" @click="submitMovie()">Submit</v-btn>
+					<v-btn :disabled="!newMovieTitle || !newMovieGenre || !newMovieSummary || !newMovieCover" text color="accent" @click="submitMovie()">Submit</v-btn>
 				</v-card-actions>
 			</v-card>
 		</v-dialog>
@@ -66,8 +66,7 @@
 </template>
 
 <script>
-import db from './../firestore'
-import firebase from 'firebase'
+import { db } from '@/firebase'
 
 export default {
   name: 'Movies',
@@ -134,7 +133,6 @@ export default {
 	methods: {
 		logMovie(movie) {
 			this.$ga.event(this.$root.username, 'is watching ' + movie)
-			this.inquiryEvent(this.$root.username, 'is watching ' + movie, 'Movies', this.$root.accountColor)
 		},
 		submitMovie() {
 			if (this.newMovieTitle && this.newMovieSummary && this.newMovieCover && this.newMovieGenre) {
@@ -146,7 +144,6 @@ export default {
 					link: '',
 					genre: this.newMovieGenre
 				}).then(() => {
-					this.inquiryEvent(this.$root.username, 'requested ' + this.newMovieTitle + ' to be added', 'Movies', this.$root.accountColor)
 					this.newMovieDialog = false
 					this.newMovieTitle = ''
 					this.newMovieSummary = ''

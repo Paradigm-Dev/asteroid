@@ -13,12 +13,12 @@
 				<v-card-title primary-title>
 					<div>
 						<h3 class="headline mb-0">{{ item.title }}</h3>
-						<h4 class="subheading grey--text">{{ item.author }}&nbsp;&nbsp;|&nbsp;&nbsp;{{ item.timestamp }}</h4>
+						<h4 class="subtitle-1 grey--text">{{ item.author }}&nbsp;&nbsp;|&nbsp;&nbsp;{{ item.timestamp }}</h4>
 					</div>
 				</v-card-title>
 				<v-divider></v-divider>
 				<v-card-actions>
-					<v-btn flat color="accent" @click="setNews(item.title, item.author, item.timestamp, item.cover, item.detail)">View Article</v-btn>
+					<v-btn text color="accent" @click="setNews(item.title, item.author, item.timestamp, item.cover, item.detail)">View Article</v-btn>
 				</v-card-actions>
 			</div>
     </v-card>
@@ -30,7 +30,7 @@
 				<v-card-title primary-title>
 					<div>
 						<h3 class="headline mb-0">{{ currentNews.title }}</h3>
-						<h4 class="subheading grey--text">{{ currentNews.author }}&nbsp;&nbsp;|&nbsp;&nbsp;{{ currentNews.timestamp }}</h4>
+						<h4 class="subtitle-1 grey--text">{{ currentNews.author }}&nbsp;&nbsp;|&nbsp;&nbsp;{{ currentNews.timestamp }}</h4>
 					</div>
 				</v-card-title>
 				<v-card-text>
@@ -38,7 +38,7 @@
 				</v-card-text>
 				<v-divider></v-divider>
 				<v-card-actions>
-					<v-btn flat color="accent" @click="newsDialog = false">Close</v-btn>
+					<v-btn text color="accent" @click="newsDialog = false">Close</v-btn>
 				</v-card-actions>
 			</v-card>
 		</v-dialog>
@@ -65,7 +65,7 @@
 				</v-card-text>
 				<v-divider></v-divider>
 				<v-card-actions>
-					<v-btn :disabled="!newNewsTitle || !newNewsDetail || !newNewsIsPublished || !newNewsCover" flat color="accent" @click="submitNews()">Submit</v-btn>
+					<v-btn :disabled="!newNewsTitle || !newNewsDetail || !newNewsIsPublished || !newNewsCover" text color="accent" @click="submitNews()">Submit</v-btn>
 				</v-card-actions>
 			</v-card>
 		</v-dialog>
@@ -75,7 +75,7 @@
 </template>
 
 <script>
-import db from './../firestore'
+import { db } from '@/firebase'
 import moment from 'moment'
 
 export default {
@@ -157,7 +157,6 @@ export default {
 					cover: this.newNewsCover,
 					timestamp: Date.now()
 				}).then(() => {
-					this.inquiryEvent(this.$root.username, 'wrote ' + this.newNewsTitle, 'The Paradox', this.$root.accountColor)
 					this.newNewsDialog = false
 					this.newNewsTitle = ''
 					this.newNewsDetail = ''

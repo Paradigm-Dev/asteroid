@@ -4,10 +4,10 @@
 			<h1 class="display-3 green--text font-weight-thin text-uppercase">Golf</h1>
 			<h6 class="headline yellow--text font-weight-thin mt-3">{{ tournament_name }}</h6>
 			<p class="grey--text font-weight-light mt-3">Last updated: {{ timestamp }}</p>
-			<v-btn color="grey" flat icon @click="reloadData()" class="mt-3"><v-icon>refresh</v-icon></v-btn>
+			<v-btn color="grey" text icon @click="reloadData()" class="mt-3"><v-icon>refresh</v-icon></v-btn>
 		</div>
 		<v-container>
-			<v-data-table :headers="headers" :items="players" hide-actions>
+			<v-data-table :headers="headers" :items="players" hide-default-footer>
 				<template v-slot:items="props">
 					<td :class="{ 'winner': props.item.current_position == '1' || props.item.current_position == 'T1' }">{{ props.item.current_position }}</td>
 					<td :class="{ 'winner': props.item.current_position == '1' || props.item.current_position == 'T1' }">{{ props.item.total }}</td>

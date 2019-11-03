@@ -1,13 +1,35 @@
 import Vue from 'vue'
-import './plugins/vuetify'
+import Vuetify from 'vuetify'
+import 'vuetify/dist/vuetify.min.css'
+import '@mdi/font/css/materialdesignicons.css'
 import App from './App.vue'
 import router from './router'
 import VueChatScroll from 'vue-chat-scroll'
 import VueAnalytics from 'vue-analytics'
 import store from './store'
-import firebase from 'firebase'
-import LogRocket from 'logrocket'
-import db from './firestore'
+import { perf } from '@/firebase'
+
+const opts = {
+  icons: {
+    iconfont: 'mdi'
+  },
+  theme: {
+    dark: true,
+    themes: {
+      dark: {
+        primary: '#1976D2',
+        secondary: '#424242',
+        accent: '#82B1FF',
+        error: '#FF5252',
+        info: '#2196F3',
+        success: '#4CAF50',
+        warning: '#FFC107'
+      }
+    }
+  }
+}
+
+Vue.use(Vuetify)
 
 Vue.use(VueAnalytics, {
 	id: 'UA-52752236-3',
@@ -20,32 +42,13 @@ Vue.use(VueChatScroll)
 
 Vue.mixin({
   methods: {
-    inquiryEvent(user, event, location, color) {
-      console.log(user, event, location, color)
-      db.collection('analytics').add({
-        user: user,
-        event: event,
-        location: location,
-        timestamp: Date.now(),
-        type: 'event',
-        color: color
-      })
-    },
-    inquiryError(user, error, location, color) {
-      console.error(user, error, location, color)
-      db.collection('analytics').add({
-        user: user,
-        error: error,
-        location: location,
-        timestamp: Date.now(),
-        type: 'error',
-        color: color
-      })
+    route(to) {
+      this.$root.switch = to
     }
   },
   data() {
     return {
-      username: null,
+      username: '',
       accountBio: null,
       accountColor: '#1565C0',
       isAdmin: false,
@@ -58,20 +61,17 @@ Vue.mixin({
       snackbar: false,
       isWriter: false,
       loadingBar: false,
-      accountUID: ''
+      switch: 'Home',
+      uid: '',
+      terminalOpen: false,
+      account_dialog: false
     }
   }
 })
 
-let app = null
-firebase.auth().onAuthStateChanged(() => {
-  if (!app) {
-    new Vue({
-      router,
-      store,
-      render: function (h) { return h(App) }
-    }).$mount('div#app')    
-  }
-})
-
-LogRocket.init('uvh8hk/paradigm')
+new Vue({
+  router,
+  store,
+  render: function(h) { return h(App) },
+  vuetify: new Vuetify(opts)
+}).$mount('div#app')    

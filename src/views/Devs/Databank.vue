@@ -10,7 +10,7 @@
       <v-card-title primary-title>
         <div>
           <h3 class="headline mb-0">{{ data.title }}</h3>
-          <h4 class="subheading grey--text">{{ data.author }}</h4>
+          <h4 class="subtitle-1 grey--text">{{ data.author }}</h4>
         </div>
       </v-card-title>
     </v-card> -->

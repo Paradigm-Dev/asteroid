@@ -1,21 +1,21 @@
 <template>
 	<div class="flamechat">
-		<v-toolbar dense color="deep-orange darken-2" v-if="flamechatEnable">
+		<v-toolbar dense color="deep-orange darken-2" v-if="flamechat_enable">
 			<v-toolbar-title>Flamechat</v-toolbar-title>
 			<v-spacer></v-spacer>
-			<v-btn v-if="$root.isAdmin && $root.accountColor && ready && chatroom" flat @click="clearAllMessages()">Purge</v-btn>
-			<v-btn v-if="$root.username && $root.accountColor && ready && chatroom" flat @click="leaveRoom()">Leave</v-btn>
+			<v-btn v-if="$root.isAdmin && $root.accountColor && ready && chatroom" text @click="purgeVerifyPopup = true">Purge</v-btn>
+			<v-btn v-if="$root.username && $root.accountColor && ready && chatroom" text @click="leaveRoom()">Leave</v-btn>
 		</v-toolbar>
 
 		<v-container>
 			<!-- Disabled card -->
-			<v-card class="disabled-card" v-if="!flamechatEnable">
+			<v-card class="disabled-card" v-if="!flamechat_enable">
 				<h1 class="display-4 red--text font-weight-bold">:(</h1><br><br>
 				<p class="headline font-weight-light">Flamechat is off.<br>It will remain off indefinitely.</p>
 			</v-card>
 
 			<!-- Welcome card -->
-			<div v-if="flamechatEnable">
+			<div v-if="flamechat_enable">
 				<v-card class="welcome-card" v-if="!$root.username || !$root.accountColor || !ready || !chatroom">
 					<v-card-title>
 						<h3 class="headline mb-0 text-xs-center">Welcome to Flamechat!</h3>
@@ -28,7 +28,7 @@
 					</v-card-text>
 					<v-divider></v-divider>
 					<v-card-actions>
-						<v-btn :disabled="!chatroom || !$root.accountColor" flat @click.stop="ready = true, setChatroom()" color="accent">Join</v-btn>
+						<v-btn :disabled="!chatroom || !$root.accountColor" text @click.stop="ready = true, setChatroom()" color="accent">Join</v-btn>
 					</v-card-actions>
 				</v-card>
 
@@ -38,11 +38,11 @@
 						<ul class="messages" v-chat-scroll="{ always: false }">
 							<p v-if="messages == []">There are no messages posted on this room.</p>
 							<li v-for="message in messages" :key="message.id" :id="message.id">
-								<v-btn :style="{ color: message.color }" class="name" flat @click="openUsernamePopup(message.name)">{{ message.name }}</v-btn>
-								<v-btn class="admin-btn" icon flat color="error" v-if="$root.isAdmin || $root.username == message.name" @click.prevent="deleteChat(message.id)"><v-icon>delete</v-icon></v-btn>
-								<v-btn class="admin-btn" icon flat color="warning" v-if="$root.isAdmin || $root.username == message.name" @click.prevent="editor = true, editing = message.id, editMessage = message.content"><v-icon>edit</v-icon></v-btn><br>
-								<span v-if="flamechatHTML" v-html="message.content" class="message"></span>
-								<span v-if="!flamechatHTML" class="message">{{ message.content }}</span>
+								<v-btn :style="{ color: message.color }" class="name" text @click="openUsernamePopup(message.name)">{{ message.name }}</v-btn>
+								<v-btn class="admin-btn" icon text color="error" v-if="$root.isAdmin || $root.username == message.name" @click.prevent="deleteChat(message.id)"><v-icon>delete</v-icon></v-btn>
+								<v-btn class="admin-btn" icon text color="warning" v-if="$root.isAdmin || $root.username == message.name" @click.prevent="editor = true, editing = message.id, editMessage = message.content"><v-icon>edit</v-icon></v-btn><br>
+								<span v-if="flamechat_html_render" v-html="message.content" class="message"></span>
+								<span v-if="!flamechat_html_render" class="message">{{ message.content }}</span>
 								<span class="time">{{ message.timestamp }}</span>
 							</li>
 						</ul>
@@ -50,13 +50,13 @@
 					<v-divider></v-divider>
 					<v-card-actions>
 						<form @submit.prevent="sendChat" class="new-message" v-if="!editor">
-							<v-btn :disabled="!flamechatEnable" id="submit" type="submit" flat icon style="float: right; display: inline; position: relative; top: 16px;">
+							<v-btn :disabled="!flamechat_enable" id="submit" type="submit" text icon style="float: right; display: inline; position: relative; top: 16px;">
 								<v-icon>send</v-icon>
 							</v-btn>
-							<v-text-field :disabled="!flamechatEnable" class="message-box" autocomplete="off" label="Message..." v-model="newMessage"></v-text-field>
+							<v-text-field :disabled="!flamechat_enable" class="message-box" autocomplete="off" label="Message..." v-model="newMessage"></v-text-field>
 						</form>
 						<form @submit.prevent="editChat" class="new-message" v-if="editor">
-							<v-btn id="submit" type="submit" flat icon style="float: right; display: inline; position: relative; top: 16px;">
+							<v-btn id="submit" type="submit" text icon style="float: right; display: inline; position: relative; top: 16px;">
 								<v-icon>edit</v-icon>
 							</v-btn>
 							<v-text-field v-model="editMessage" class="message-box" autocomplete="off" label="Edit Message"></v-text-field>
@@ -79,22 +79,35 @@
 					</v-card-title>
 					<v-card-text>
 						<p>{{ profilePopupBio }}</p>
-						<img src="./../assets/isAdmin.png" alt="Administrator" class="moonrock-img" v-if="profilePopupAdmin" style="height: 25px !important;">
-						<img src="./../assets/asteroid.png" alt="Asteroid" class="moonrock-img" v-if="profilePopupAsteroid" style="height: 25px !important;"><br>
-						<img src="./../assets/moonrocks.png" alt="Moonrocks" class="moonrock-img"><span class="moonrock-count font-weight-medium">{{ profilePopupMoonrocks }}</span>
+						<img src="@/assets/isAdmin.png" alt="Administrator" class="moonrock-img" v-if="profilePopupAdmin" style="height: 25px !important;">
+						<img src="@/assets/asteroid.png" alt="Asteroid" class="moonrock-img" v-if="profilePopupAsteroid" style="height: 25px !important;"><br>
+						<img src="@/assets/moonrocks.png" alt="Moonrocks" class="moonrock-img"><span class="moonrock-count font-weight-medium">{{ profilePopupMoonrocks }}</span>
 					</v-card-text>
 					<v-divider></v-divider>
 					<v-card-actions>
-						<v-btn flat @click="noDM()" color="accent">Message</v-btn>
+						<v-btn text @click="noDM()" color="accent">Message</v-btn>
 					</v-card-actions>
 				</div>
 			</v-card>
 		</v-dialog>
+
+		<v-dialog v-model="purgeVerifyPopup" max-width="400">
+			<v-card>
+				<v-card-title><h3 class="headline mb-0">Purge Chatroom</h3></v-card-title>
+				<v-card-text>Are you sure you want to purge this chatroom?</v-card-text>
+				<v-divider></v-divider>
+				<v-card-actions>
+					<v-btn @click="clearAllMessages()" color="error" text>Yes</v-btn>
+					<v-btn @click="purgeVerifyPopup = false" color="green">Cancel</v-btn>
+				</v-card-actions>
+			</v-card>
+		</v-dialog>
+
 	</div>
 </template>
 
 <script>
-import db from './../firestore'
+import { db } from '@/firebase'
 import moment from 'moment'
 
 export default {
@@ -107,10 +120,10 @@ export default {
 			editMessage: '',
 			editor: false,
 			editing: null,
-			flamechatEnable: true,
+			flamechat_enable: true,
 			chatroom: null,
 			chatrooms: [],
-			flamechatHTML: null,
+			flamechat_html_render: true,
 			profilePopupUsername: '',
 			profilePopupEnable: false,
 			profilePopupBio: '',
@@ -120,7 +133,8 @@ export default {
 			profilePopupAdmin: false,
 			profilePopupAsteroid: false,
 			lockdown: null,
-			fourofour: null
+			global_pnf: null,
+			purgeVerifyPopup: false
     }
 	},
 	created() {
@@ -157,26 +171,26 @@ export default {
 			})
 		})
 
-		var metaRef = db.collection('meta')
-		metaRef.doc('auth').get().then((doc) => {
-			this.flamechatEnable = doc.data().flamechatEnable
-			this.flamechatHTML = doc.data().flamechatHTML
+		var metaRef = db.collection('paradigm')
+		metaRef.doc('config').get().then((doc) => {
+			this.flamechat_enable = doc.data().flamechat_enable
+			this.flamechat_html_render = doc.data().flamechat_html_render
 			this.lockdown = doc.data().lockdown
-			this.fourofour = doc.data().fourofour
+			this.global_pnf = doc.data().global_pnf
 		})
 
 		metaRef.onSnapshot(snapshot => {
 			snapshot.docChanges().forEach(change => {
 				if(change.type === "modified") {
 					let doc = change.doc
-					this.flamechatEnable = doc.data().flamechatEnable
-					this.flamechatHTML = doc.data().flamechatHTML
+					this.flamechat_enable = doc.data().flamechat_enable
+					this.flamechat_html_render = doc.data().flamechat_html_render
 					this.lockdown = doc.data().lockdown
-					this.fourofour = doc.data().fourofour
+					this.global_pnf = doc.data().global_pnf
 					this.newMessage = null
 				}
 
-				if (this.lockdown || this.fourofour) {
+				if (this.lockdown || this.global_pnf) {
 					this.profilePopupUsername = ''
 					this.profilePopupMoonrocks = ''
 					this.profilePopupColor = ''
@@ -195,26 +209,24 @@ export default {
 				this.$root.feedback = 'Message deleted successfully.'
 				this.$root.snackbar = true
 				this.$ga.event(this.$root.username, 'deleted a message on ' + this.chatroom)
-				this.inquiryEvent(this.$root.username, 'deleted a message on ' + this.chatroom, 'Flamechat', this.$root.accountColor)
 			}).catch(error => {
-				this.inquiryError(this.$root.username, error.message + this.chatroom, 'Flamechat', this.$root.accountColor)
+				this.$ga.event($root.username, 'error: ' + error.message)
 			})
 		},
 		clearAllMessages() {
 			var message
-			for(message in this.messages) {
+			for (message in this.messages) {
 				db.collection('flamechat').doc('chatrooms').collection(this.chatroom).get().then(snapshot => {
 					snapshot.forEach(doc => {
 						doc.ref.delete()
 						this.$root.feedback = 'All messages purged.'
 						this.$root.snackbar = true
 					}).catch(error => {
-						this.inquiryError(this.$root.username, error.message + this.chatroom, 'Flamechat', this.$root.accountColor)
+						this.$ga.event($root.username, 'error: ' + error.message)
 					})
 				})
 			}
-			this.$ga.event(this.$root.username, 'purged all messages')
-			this.inquiryEvent(this.$root.username, 'purged all messages on ' + this.chatroom, 'Flamechat', this.$root.accountColor)
+			this.purgeVerifyPopup = false
 		},
 		sendChat() {
 			if(this.newMessage && this.$root.username != '' && this.$root.accountColor != null) {
@@ -223,20 +235,19 @@ export default {
 					content: this.newMessage,
 					color: this.$root.accountColor,
 					timestamp: Date.now()
-				}).catch(err => {
-					console.log(err)
+				}).catch(error => {
+					console.log(error.message)
 					this.$root.feedback = 'Your message did not send successfully!'
 					this.$root.snackbar = true
-					this.inquiryError(this.$root.username, err.message + this.chatroom, 'Flamechat', this.$root.accountColor)
+					this.$ga.event($root.username, 'error: ' + error.message)
 				})
 				this.$root.feedback = 'Your message sent successfully!'
 				this.$root.snackbar = true
 				this.$ga.event(this.$root.username, 'sent ' + this.newMessage + ' on ' + this.chatroom)
-				this.inquiryEvent(this.$root.username, 'sent "' + this.newMessage + '" on ' + this.chatroom, 'Flamechat', this.$root.accountColor)
 				this.newMessage = null
 			} else {
 				this.$root.feedback = 'Your message did not send sucessfully!'
-				this.inquiryError(this.$root.username, 'tried to send a message on ' + this.chatroom, 'Flamechat', this.$root.accountColor)
+				this.$ga.event($root.username, 'error: they tried and failed to send a message')
 				this.$root.snackbar = true
 			}
 		},
@@ -247,12 +258,11 @@ export default {
 				this.$root.feedback = 'Message edited successfully.'
 				this.$root.snackbar = true
 				this.$ga.event(this.$root.username, 'edited ' + this.editMessage + ' on ' + this.chatroom)
-				this.inquiryEvent(this.$root.username, 'edited ' + this.editMessage + ' on ' + this.chatroom, 'Flamechat', this.$root.accountColor)
 				this.editing = null
 				this.editMessage = ''
 				this.editor = false
 			}).catch(error => {
-				this.inquiryError(this.$root.username, error.message + this.chatroom, 'Flamechat', this.$root.accountColor)
+				this.$ga.event($root.username, 'error: ' + error.message)
 			})
 		},
 		setChatroom() {

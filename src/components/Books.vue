@@ -10,13 +10,13 @@
 					<v-card-title primary-title>
 						<div>
 							<h3 class="headline mb-0">{{ book.title }}</h3>
-							<h4 class="subheading grey--text">By {{ book.author }}</h4>
+							<h4 class="subtitle-1 grey--text">By {{ book.author }}</h4>
 						</div>
 					</v-card-title>
 					<v-divider></v-divider>
 					<v-card-text>{{ book.summary }}</v-card-text>
 					<v-card-actions>
-						<v-btn flat color="accent" :disabled="!book.available" :href="book.link" @click="logBook(book.title)">Read</v-btn>
+						<v-btn text color="accent" :disabled="!book.available" :href="book.link" @click="logBook(book.title)">Read</v-btn>
 					</v-card-actions>
 				</v-card>
 			</div>
@@ -44,7 +44,7 @@
 				</v-card-text>
 				<v-divider></v-divider>
 				<v-card-actions>
-					<v-btn :disabled="!newBookTitle || !newBookGenre || !newBookSummary || !newBookCover || !newBookGenre" flat color="accent" @click="submitBook()">Submit</v-btn>
+					<v-btn :disabled="!newBookTitle || !newBookGenre || !newBookSummary || !newBookCover || !newBookGenre" text color="accent" @click="submitBook()">Submit</v-btn>
 				</v-card-actions>
 			</v-card>
 		</v-dialog>
@@ -52,8 +52,7 @@
 </template>
 
 <script>
-import db from './../firestore'
-import firebase from 'firebase'
+import { db } from '@/firebase'
 
 export default {
   name: 'Bookshelf',
@@ -117,7 +116,6 @@ export default {
 	methods: {
 		logBook(book) {
 			this.$ga.event(this.$root.username,  + 'is reading ' + book)
-			this.inquiryEvent(this.$root.username, 'is reading ' + book, 'Bookshelf', this.$root.accountColor)
 		},
 		submitBook() {
 			if (this.newBookTitle && this.newBookAuthor && this.newBookCover && this.newBookGenre && this.newBookSummary) {
@@ -130,7 +128,6 @@ export default {
 					genre: this.newBookGenre,
 					summary: this.newBookSummary
 				}).then(() => {
-					this.inquiryEvent(this.$root.username, 'requested ' + this.newBookTitle + ' by ' + this.newBookAuthor + ' to be added', 'Bookshelf', this.$root.accountColor)
 					this.newBookDialog = false
 					this.newBookTitle = ''
 					this.newBookAuthor = ''

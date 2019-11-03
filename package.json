@@ -13,7 +13,8 @@
     "axios": "^0.18.0",
     "core-js": "^2.6.5",
     "electron-updater": "^4.0.6",
-    "firebase": "^5.10.1",
+    "firebase": "^5.11.1",
+    "firebase-tools": "^6.10.0",
     "geolocation": "^0.2.0",
     "logrocket": "^0.6.21",
     "moment": "^2.24.0",
@@ -26,6 +27,7 @@
     "vuex": "^3.0.1"
   },
   "devDependencies": {
+    "@mdi/font": "^3.6.95",
     "@vue/cli-plugin-babel": "^3.7.0",
     "@vue/cli-service": "^3.7.0",
     "electron": "^4.1.5",

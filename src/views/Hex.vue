@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import db from './../firestore'
+import { db } from './../firebase'
 
 export default {
   name: 'Hex',

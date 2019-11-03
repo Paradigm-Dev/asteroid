@@ -1,23 +1,23 @@
 <template>
   <v-card style="text-align: center" class="elevation-0">
     <v-card-text>
-      <v-btn flat icon class="primary--text" @click.native="playing ? pause() : play()" :disabled="loaded === false">
+      <v-btn text icon class="primary--text" @click.native="playing ? pause() : play()" v-if="loaded">
         <v-icon v-if="playing === false || paused === true">play_arrow</v-icon>
         <v-icon v-else>pause</v-icon>
       </v-btn>
-      <v-btn flat icon class="primary--text" @click.native="stop()" :disabled="loaded === false">
+      <v-btn text icon class="primary--text" @click.native="stop()" v-if="loaded">
         <v-icon>stop</v-icon>
       </v-btn>
-      <v-btn flat icon class="primary--text" @click.native="mute()" :disabled="loaded === false">
+      <v-btn text icon class="primary--text" @click.native="mute()" v-if="loaded">
         <v-icon v-if="isMuted === false">volume_up</v-icon>
         <v-icon v-else>volume_off</v-icon>
       </v-btn>
-      <v-btn flat icon :class="{ 'primary--text': loaded, 'error--text': !loaded }" @click.native="loaded ? download() : reload()">
-        <v-icon v-if="loaded === false">refresh</v-icon>
-        <v-icon v-else>get_app</v-icon>
+      <v-btn text icon class="primary--text" @click.native="download()" v-if="loaded">
+        <v-icon>get_app</v-icon>
       </v-btn>
+      <v-btn @click.native="reload()" v-else color="red">Reload</v-btn>
       <v-switch style="margin: auto;" append-icon="repeat" v-model="repeat" :disabled="loaded === false"></v-switch>
-      <v-slider ref="slider" @click.native="setPosition()" v-model="percentage"></v-slider>
+      <v-slider ref="slider" @click.native="setPosition()" v-model="percentage" :disabled="loaded === false"></v-slider>
       <p><strong>{{ currentTime }}</strong> / {{ duration }}</p>
     </v-card-text>
     <audio id="player" ref="player" v-on:ended="ended" v-on:canplay="canPlay" :src="file"></audio>
@@ -97,13 +97,13 @@ export default {
       this.volumeValue = this.isMuted ? 0 : 75
     },
     reload() {
-      this.audio.load();
+      this.audio.load()
     },
     _handleLoaded() {
       if (this.audio.readyState >= 2) {
         if (this.autoPlay) this.audio.play()
-        	this.loaded = true
-          this.totalDuration = parseInt(this.audio.duration)
+        this.loaded = true
+        this.totalDuration = parseInt(this.audio.duration)
       } else {
         throw new Error('Failed to load sound file')
       }
@@ -136,7 +136,6 @@ export default {
 	mounted() {
 		this.audio = this.$refs.player
 		this.init()
-		this.reload()
 	},
 	beforeDestroy() {
 		this.audio.removeEventListener('timeupdate', this._handlePlayingUI)
