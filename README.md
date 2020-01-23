@@ -1,8 +1,29 @@
-# Asteroid
-Asteroid is a lightweight, yet powerful desktop experience that will make you rethink what is possible on a computer.
+# asteroid-os
 
-### Notice:
-The source code uploaded here is not up-to-date. Please bare with us as we rewrite and rethink Asteroid. Please view the organization project board to track progress.
+## Project setup
+```
+npm install
+```
 
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
 
-*Readme coming soon*
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Run your tests
+```
+npm run test
+```
+
+### Lints and fixes files
+```
+npm run lint
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).
