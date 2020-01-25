@@ -1,16 +1,17 @@
 {
-  "name": "asteroid-os",
-  "version": "0.1.0",
+  "name": "asteroid",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
-    "build": "vue-cli-service electron:build",
-    "serve": "vue-cli-service electron:serve",
-    "postinstall": "electron-builder install-app-deps",
-    "postuninstall": "electron-builder install-app-deps"
+    "build": "npx vue-cli-service electron:build",
+    "serve": "npx vue-cli-service electron:serve",
+    "postinstall": "npx electron-builder install-app-deps",
+    "postuninstall": "npx electron-builder install-app-deps"
   },
   "main": "background.js",
   "dependencies": {
     "core-js": "^2.6.11",
+    "moment": "^2.24.0",
     "moveable": "^0.13.4",
     "vue": "^2.6.11",
     "vuetify": "^2.2.6",

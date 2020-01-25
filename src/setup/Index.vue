@@ -1,17 +1,21 @@
 <template>
   <div class="setup index">
-    <v-card width="1000" class="window">
-      <v-system-bar style="-webkit-app-region: drag; cursor: move;">
-        <span class="__style-appname">Rover</span>
+    <v-card width="1000" class="window text-center" style="background-color: rgba(132, 0, 187, .8);">
+      <v-system-bar height="32" style="background-color: rgba(132, 0, 187, .8);">
+        <span class="__style-appname">Apollo Installer</span>
         <v-spacer></v-spacer>
         <v-btn x-small icon @click="$minimizeWindow()"><v-icon>mdi-power</v-icon></v-btn>
       </v-system-bar>
 
-      <Start />
+      <Start v-if="page == 1" />
+      <Region v-if="page == 2" />
+      <User v-if="page == 3" />
+      <Finish v-if="page == 4" />
 
-      <v-card-actions>
+      <v-card-actions style="background-color: rgba(132, 0, 187, .8);">
+        <v-btn :disabled="page >= 4 || page <= 1" @click="page >= 8 || page <= 1 ? console.log() : page -= 1" text color="blue lighten-2">Back</v-btn>
         <v-spacer></v-spacer>
-        <v-btn text color="blue lighten-2">Next</v-btn>
+        <v-btn @click="page >= 4 ? quit() : page += 1" text color="blue lighten-2">Next</v-btn>
       </v-card-actions>
     </v-card>
   </div>
@@ -19,17 +23,29 @@
 
 <script>
 import Start from './Start.vue'
+import Region from './Region.vue'
+import User from './User.vue'
+import Finish from './Finish.vue'
+
 import Moveable from 'moveable'
 
 export default {
   name: 'AsteroidAutomatedSetupProcess',
   data() {
     return {
-      minimized: false
+      minimized: false,
+      page: 1
     }
   },
   components: {
-    Start
+    Start, Region, User, Finish
+  },
+  methods: {
+    quit() {
+      this.$root.data.setup_completed = true
+      this.$saveData()
+      console.log('Done with setup')
+    }
   },
   mounted() {
     const moveable = new Moveable(document.body, {
