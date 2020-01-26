@@ -4,9 +4,9 @@
       <v-system-bar height="32" :style="{ backgroundColor: app.config.color }">
         <span class="__style-appname">{{ app.name }}</span>
         <v-spacer></v-spacer>
-        <v-btn x-small icon @click="minimizeApp()"><v-icon>mdi-minus</v-icon></v-btn>
-        <v-btn x-small icon @click="closeApp()"><v-icon>mdi-crop-square</v-icon></v-btn>
-        <v-btn x-small icon @click="closeApp()"><v-icon>mdi-close</v-icon></v-btn>
+        <v-btn x-small icon @click="minimizeApp()"><v-icon class="mr-0">mdi-minus</v-icon></v-btn>
+        <v-btn x-small icon @click="closeApp()"><v-icon class="mr-0">mdi-crop-square</v-icon></v-btn>
+        <v-btn x-small icon @click="closeApp()"><v-icon class="mr-0">mdi-close</v-icon></v-btn>
       </v-system-bar>
 
       <v-container class="pa-0" fluid>

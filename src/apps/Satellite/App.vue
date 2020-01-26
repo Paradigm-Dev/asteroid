@@ -4,9 +4,9 @@
       <v-system-bar height="32" :style="{ backgroundColor: app.config.color }" style="z-index: 100;" class="elevation-5">
         <span class="__style-appname">{{ app.name }}</span>
         <v-spacer></v-spacer>
-        <v-btn x-small icon @click="minimizeApp()"><v-icon>mdi-minus</v-icon></v-btn>
-        <v-btn x-small icon @click="closeApp()"><v-icon>mdi-crop-square</v-icon></v-btn>
-        <v-btn x-small icon @click="closeApp()"><v-icon>mdi-close</v-icon></v-btn>
+        <v-btn x-small icon @click="minimizeApp()"><v-icon class="mr-0">mdi-minus</v-icon></v-btn>
+        <v-btn x-small icon @click="closeApp()"><v-icon class="mr-0">mdi-crop-square</v-icon></v-btn>
+        <v-btn x-small icon @click="closeApp()"><v-icon class="mr-0">mdi-close</v-icon></v-btn>
       </v-system-bar>
 
       <v-toolbar dense color="rgba(69, 90, 100, .8)">
@@ -23,7 +23,7 @@
 import * as windowManager from '@/lifecycle/windowManager.js'
 
 export default {
-  name: 'Contacts',
+  name: 'Satellite',
   props: [ 'app' ],
   data() {
     return {
