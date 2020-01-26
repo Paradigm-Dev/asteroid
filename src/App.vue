@@ -132,7 +132,7 @@ export default {
   transform: translate(-50%, -50%);
 }
 
-.v-card {
+.v-card:not(.v-sheet--tile):not(.v-card--shaped) {
   border-radius: 10px;
 }
 

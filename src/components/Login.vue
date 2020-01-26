@@ -1,37 +1,41 @@
 <template>
   <div class="login index">
     <div class="accounts">
-      <h1 class="title">Welcome</h1>
-      <p class="font-weight-light">Click on your user</p>
-      <v-card v-for="(user, index) in $root.data.users" :key="index" @click="password_popup = true" style="background: rgba(132, 0, 187, .8)">
-        <v-container fluid>
-          <v-row>
-            <v-col sm="3">
-              <v-img :src="user.img"></v-img>
-            </v-col>
-            <v-col sm="9">
-              <h1 class="display-1">{{ user.username }}</h1>
-            </v-col>
-          </v-row>
-        </v-container>
-      </v-card>
-      <v-card @click="password_popup = true" style="background: rgba(132, 0, 187, .8)">
-        <v-card-text class="white--text">
-          <h1 class="display-1">Other user</h1>
-        </v-card-text>
-      </v-card>
+      <h1 class="display-1">Welcome!</h1>
+      <p class="title font-weight-light">Click on your user</p>
+      <v-item-group v-model="user">
+        <v-item :value="user.username" v-for="(user, index) in $root.data.users" :key="index" v-slot:default="{ active, toggle }">
+          <v-card @click="toggle" class="mb-6" style="background: rgba(132, 0, 187, .8)">
+            <v-container fluid class="py-0">
+              <v-row>
+                <v-col sm="2" class="pa-0 ma-0">
+                  <v-img style="border-radius: 10px;" :src="user.img"></v-img>
+                </v-col>
+                <v-col sm="9">
+                  <h1 class="text-left pl-2 headline font-weight-medium text-uppercase" style="padding-top: 2px;" :style="{ color: user.color }">{{ user.username }}</h1>
+                </v-col>
+              </v-row>
+            </v-container>
+          </v-card>
+        </v-item>
+
+        <v-item value="" v-slot:default="{ active, toggle }">
+          <v-card @click="toggle" style="background: rgba(132, 0, 187, .8); height: 58.38px;">
+            <h1 class="headline pt-3">Other user</h1>
+          </v-card>
+        </v-item>
+      </v-item-group>
     </div>
 
     <v-fade-transition>
-      <v-card v-if="password_popup" width="400" class="window text-center" style="background: rgba(0, 81, 187, .8)">
+      <v-card v-if="user" width="400" class="window text-center" style="background: rgba(0, 81, 187, .8)">
         <v-card-text class="text-left pb-0 mb-0">
-          <h1 class="display-1">Aidan Liddy</h1>
-          <span class="title font-weight-light">aidanliddy</span>
+          <v-text-field v-model="user" label="Username"></v-text-field>
           <v-text-field type="password" v-model="password" label="Password"></v-text-field>
         </v-card-text>
 
         <v-card-actions>
-          <v-btn text color="grey" @click="password_popup = false">Cancel</v-btn>
+          <v-btn text color="grey" @click="user = ''">Cancel</v-btn>
           <v-spacer></v-spacer>
           <v-btn :disabled="password !== $root.data.password" text color="green" @click="$root.logged_in = true">Login</v-btn>
         </v-card-actions>
@@ -48,7 +52,8 @@ export default {
   data() {
     return {
       password_popup: false,
-      password: ''
+      password: '',
+      user: ''
     }
   },
   methods: {
