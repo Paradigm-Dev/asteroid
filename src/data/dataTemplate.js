@@ -7,8 +7,18 @@ export default {
   apps: {
     Calculator: {
       width: 500,
-      color: 'rgba(72, 72, 72, .65)',
-      actions: false
+      color: 'rgba(72, 72, 72, .8)',
+    },
+    Contacts: {
+      width: 600,
+      color: 'rgba(72, 72, 72, .8)',
+      contacts: [
+        { name: 'Aidan Liddy' }
+      ]
+    },
+    Satellite: {
+      width: 500,
+      color: 'rgba(69, 90, 100, .8)',
     }
   }
 }
