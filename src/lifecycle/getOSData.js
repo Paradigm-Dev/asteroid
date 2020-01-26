@@ -2,10 +2,10 @@ import electron from 'electron'
 import path from 'path'
 import fs from 'fs'
 
-import osDataTemplate from '@/data/os_dataTemplate.js'
+import osDataTemplate from '@/data/dataTemplate.js'
 
 const userDataPath = (electron.app || electron.remote.app).getPath('userData')
-var pathway = path.join(userDataPath, 'os_data.json')
+var pathway = path.join(userDataPath, 'data.json')
 
 var data = parseDataFile(pathway)
 

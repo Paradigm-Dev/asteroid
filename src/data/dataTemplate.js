@@ -7,7 +7,8 @@ export default {
   apps: {
     Calculator: {
       width: 500,
-      color: 'blue'
+      color: 'rgba(72, 72, 72, .65)',
+      actions: false
     }
   }
 }
