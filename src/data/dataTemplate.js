@@ -17,7 +17,7 @@ export default {
       ]
     },
     Satellite: {
-      width: 500,
+      width: 1200,
       color: 'rgba(69, 90, 100, .8)',
     }
   }
