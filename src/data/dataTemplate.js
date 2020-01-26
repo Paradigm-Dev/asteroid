@@ -1,9 +1,7 @@
 export default {
-  setup_completed: false,
-  username: '',
-  password: '',
-  given_name: '',
-  region: '',
+  users: [
+    { username: 'diddy12310', img: 'https://relay.theparadigmdev.com/profile-pics/paradigm.jpg' }
+  ],
   apps: {
     Calculator: {
       width: 500,
@@ -12,13 +10,16 @@ export default {
     Contacts: {
       width: 600,
       color: 'rgba(72, 72, 72, .8)',
-      contacts: [
-        { name: 'Aidan Liddy' }
-      ]
+      contacts: []
     },
     Satellite: {
       width: 1200,
       color: 'rgba(69, 90, 100, .8)',
+    },
+    Todo: {
+      width: 400,
+      color: 'rgba(69, 90, 100, .8)',
+      todo: []
     }
   }
 }

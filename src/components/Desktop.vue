@@ -2,8 +2,15 @@
   <div class="desktop">
     <v-app-bar dense style="background: rgba(72, 72, 72, .8); z-index: 100000;">
       <v-app-bar-nav-icon @click="$root.launch_menu = !$root.launch_menu" v-model="$root.launch_menu"><v-icon>mdi-rocket</v-icon></v-app-bar-nav-icon>
-      <v-toolbar-title>Asteroid</v-toolbar-title>
-      <v-divider vertical inset class="ml-8 mr-4"></v-divider>
+      <v-toolbar-title>
+        <v-list-item class="pa-0">
+          <v-list-item-content>
+            <v-list-item-title>{{ $root.data.given_name }}</v-list-item-title>
+            <v-list-item-subtitle>{{ $root.data.username }}</v-list-item-subtitle>
+          </v-list-item-content>
+        </v-list-item>
+      </v-toolbar-title>
+      <v-divider vertical inset class="mr-4"></v-divider>
       <v-fade-transition group>
         <v-btn text @click="unminimizeApp(app)" v-for="(app, index) in minimized" :key="index">{{ app.name }}</v-btn>
       </v-fade-transition>
@@ -13,7 +20,7 @@
     </v-app-bar>
 
     <div class="desktop-wrapper">
-      <v-fade-transition group>
+      <v-fade-transition group style="z-index: 1;">
         <div v-if="app.visible" v-for="(app, index) in apps" :key="index" class="window" :class="app.class" style="position: absolute;">
           <component :app="app" :is="app.name"></component>
         </div>
@@ -33,6 +40,16 @@
         <img src="@/apps/Satellite/icon.png">
         <span>Satellite</span>
       </div>
+
+      <div @click="openApp('Todo')" class="app-display" v-ripple>
+        <img src="@/apps/Todo/icon.png">
+        <span>To-Do</span>
+      </div>
+
+      <p class="mb-4 mr-4 clock">
+        <span class="title font-weight-medium">{{ time }}</span><br>
+        <span class="font-weight-light">{{ date }}</span>
+      </p>
     </div>
   </div>
 </template>
@@ -42,6 +59,7 @@ import * as windowManager from '@/lifecycle/windowManager.js'
 
 import Moveable from 'moveable'
 import { remote } from 'electron'
+import moment from 'moment'
 
 export default {
   data() {
@@ -49,7 +67,9 @@ export default {
       win: remote.getCurrentWindow(),
       document: document,
       apps: windowManager.apps,
-      minimized: windowManager.minimized
+      minimized: windowManager.minimized,
+      time: '',
+      date: ''
     }
   },
   methods: {
@@ -106,10 +126,17 @@ export default {
           target.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`
         }).on("dragEnd", ({ target, isDrag, clientX, clientY }) => {})
       })
-    }
+    },
+    startTime() {
+			var today = new Date()
+			this.date = moment(today).format('MMMM Do, YYYY')
+			this.time = moment(today).format('LTS')
+			setTimeout(this.startTime, 500)
+		}
   },
   mounted() {
     this.winManReload()
+    this.startTime()
   }
 }
 </script>
@@ -124,6 +151,7 @@ export default {
   background-size: cover;
   background-attachment: fixed;
   background-position: center;
+  background-repeat: no-repeat;
   height: 100%;
   width: 100%;
 }
@@ -143,5 +171,13 @@ export default {
 
 .app-display span {
   margin: auto;
+}
+
+.clock {
+  position: absolute;
+  bottom: 0px;
+  right: 0px;
+  text-align: right;
+  z-index: 0 !important;
 }
 </style>

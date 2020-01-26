@@ -12,6 +12,11 @@
           <v-list-item-title>Sleep</v-list-item-title>
         </v-list-item>
 
+        <v-list-item @click="$root.logged_in = false">
+          <v-list-item-icon><v-icon>mdi-logout-variant</v-icon></v-list-item-icon>
+          <v-list-item-title>Logout</v-list-item-title>
+        </v-list-item>
+
         <v-list-item @click="$root.data.setup_completed = false">
           <v-list-item-icon><v-icon>mdi-backup-restore</v-icon></v-list-item-icon>
           <v-list-item-title>Enter setup mode</v-list-item-title>
@@ -19,30 +24,52 @@
       </v-list>
     </v-menu>
 
-    <v-content v-if="$root.data.setup_completed">
-      <Desktop />
-    </v-content>
+    <div v-if="$root.data.setup_completed" style="height: 100vh;">
+      <v-content key="desktop" v-if="$root.logged_in" style="height: 100vh;">
+        <Desktop />
+      </v-content>
 
-    <v-content v-if="!$root.data.setup_completed">
-      <div class="fill-height setup-bg">
-        <p class="pt-4 pl-4">
-          <span class="title font-weight-medium">{{ time }}</span><br>
-          <span class="font-weight-light">{{ date }}</span>
-        </p>
+      <v-content key="login" v-if="!$root.logged_in" style="height: 100vh;">
+        <div class="fill-height setup-bg">
+          <p class="pt-4 pl-4">
+            <span class="title font-weight-medium">{{ time }}</span><br>
+            <span class="font-weight-light">{{ date }}</span>
+          </p>
 
-        <p style="position: absolute; top: 16px; right: 16px; text-align: right;">
-          <span class="font-weight-medium">Paradigm Asteroid</span><br>
-          <span class="font-weight-light">Voyager Build 1</span>
-        </p>
-        <img src="@/assets/logo.png" style="position: absolute; bottom: 12px; left: 12px;">
-        <AsteroidAutomatedSetupProcess />
-      </div>
-    </v-content>
+          <p style="position: absolute; top: 16px; right: 16px; text-align: right;">
+            <span class="font-weight-medium">Paradigm Asteroid</span><br>
+            <span class="font-weight-light">Voyager Build 1</span>
+          </p>
+          <img @click="__winReload()" src="@/assets/logo.png" style="position: absolute; bottom: 12px; left: 12px;">
+          <Login />
+        </div>
+      </v-content>
+    </div>
+
+    <v-fade-transition v-else>
+      <v-content key="setup">
+        <div class="fill-height setup-bg">
+          <p class="pt-4 pl-4">
+            <span class="title font-weight-medium">{{ time }}</span><br>
+            <span class="font-weight-light">{{ date }}</span>
+          </p>
+
+          <p style="position: absolute; top: 16px; right: 16px; text-align: right;">
+            <span class="font-weight-medium">Paradigm Asteroid</span><br>
+            <span class="font-weight-light">Voyager Build 1</span>
+          </p>
+          <img @click="__winReload()" src="@/assets/logo.png" style="position: absolute; bottom: 12px; left: 12px;">
+          <AsteroidAutomatedSetupProcess />
+        </div>
+      </v-content>
+    </v-fade-transition>
   </v-app>
 </template>
 
 <script>
 import Desktop from './components/Desktop'
+import Login from './components/Login'
+
 import { remote } from 'electron'
 import moment from 'moment'
 
@@ -53,8 +80,7 @@ import AsteroidAutomatedSetupProcess from './setup/Index.vue'
 export default {
   name: 'App',
   components: {
-    Desktop,
-    AsteroidAutomatedSetupProcess
+    Desktop, Login, AsteroidAutomatedSetupProcess
   },
   data() {
     return {
@@ -74,10 +100,17 @@ export default {
     },
     __winReload() {
       this.win.reload()
-    }
+    },
+    startTime() {
+			var today = new Date()
+			this.date = moment(today).format('MMMM Do, YYYY')
+			this.time = moment(today).format('LTS')
+			setTimeout(this.startTime, 500)
+		}
   },
   created() {
     this.$root.data = OSBootData
+    this.startTime()
   }
 }
 </script>
