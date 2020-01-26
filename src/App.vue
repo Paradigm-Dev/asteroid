@@ -24,30 +24,12 @@
       </v-list>
     </v-menu>
 
-    <div v-if="$root.data.setup_completed" style="height: 100vh;">
-      <v-content key="desktop" v-if="$root.logged_in" style="height: 100vh;">
+    <div v-if="$root.user" style="height: 100vh;">
+      <v-content style="height: 100vh;">
         <Desktop />
       </v-content>
 
-      <v-content key="login" v-if="!$root.logged_in" style="height: 100vh;">
-        <div class="fill-height setup-bg">
-          <p class="pt-4 pl-4">
-            <span class="title font-weight-medium">{{ time }}</span><br>
-            <span class="font-weight-light">{{ date }}</span>
-          </p>
-
-          <p style="position: absolute; top: 16px; right: 16px; text-align: right;">
-            <span class="font-weight-medium">Paradigm Asteroid</span><br>
-            <span class="font-weight-light">Voyager Build 1</span>
-          </p>
-          <img @click="__winReload()" src="@/assets/logo.png" style="position: absolute; bottom: 12px; left: 12px;">
-          <Login />
-        </div>
-      </v-content>
-    </div>
-
-    <v-fade-transition v-else>
-      <v-content key="setup">
+      <!-- <v-content v-if="!$root.user.asteroid.setup">
         <div class="fill-height setup-bg">
           <p class="pt-4 pl-4">
             <span class="title font-weight-medium">{{ time }}</span><br>
@@ -61,8 +43,25 @@
           <img @click="__winReload()" src="@/assets/logo.png" style="position: absolute; bottom: 12px; left: 12px;">
           <AsteroidAutomatedSetupProcess />
         </div>
-      </v-content>
-    </v-fade-transition>
+      </v-content> -->
+    </div>
+
+    <v-content v-else style="height: 100vh;">
+      <div class="fill-height setup-bg">
+        <p class="pt-4 pl-4">
+          <span class="title font-weight-medium">{{ time }}</span><br>
+          <span class="font-weight-light">{{ date }}</span>
+        </p>
+
+        <p style="position: absolute; top: 16px; right: 16px; text-align: right;">
+          <span class="font-weight-medium">Paradigm Asteroid</span><br>
+          <span class="font-weight-light">Voyager Build 1</span>
+        </p>
+        <img @click="__winReload()" src="@/assets/logo.png" style="position: absolute; bottom: 12px; left: 12px;">
+        <Login />
+      </div>
+    </v-content>
+
   </v-app>
 </template>
 
@@ -109,7 +108,6 @@ export default {
 		}
   },
   created() {
-    this.$root.data = OSBootData
     this.startTime()
   }
 }

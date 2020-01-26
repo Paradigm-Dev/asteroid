@@ -1,7 +1,7 @@
 <template>
   <div class="desktop">
     <v-app-bar dense style="background: rgba(72, 72, 72, .8); z-index: 100000;">
-      <v-app-bar-nav-icon @click="$root.launch_menu = !$root.launch_menu" v-model="$root.launch_menu"><v-icon>mdi-rocket</v-icon></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click="$root.launch_menu = !$root.launch_menu" v-model="$root.launch_menu"><v-avatar :src="picURLresolve"></v-avatar></v-app-bar-nav-icon>
       <v-toolbar-title>
         <v-list-item class="pa-0">
           <v-list-item-content>
@@ -70,6 +70,11 @@ export default {
       minimized: windowManager.minimized,
       time: '',
       date: ''
+    }
+  },
+  computed: {
+    picURLresolve() {
+      return `https://relay.theparadigmdev.com/profile-pics/${this.$root.user.pic}.jpg`
     }
   },
   methods: {

@@ -21,7 +21,7 @@ new Vue({
   data() {
     return {
       launch_menu: false,
-      logged_in: true,
+      user: null,
       data: {}
     }
   }

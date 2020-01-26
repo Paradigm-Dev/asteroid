@@ -1,7 +1,5 @@
 export default {
-  users: [
-    { username: 'diddy12310', img: 'https://relay.theparadigmdev.com/profile-pics/paradigm.jpg', color: '#bf9b30' }
-  ],
+  setup: true,
   apps: {
     Calculator: {
       width: 500,

@@ -2,22 +2,28 @@ import electron from 'electron'
 import path from 'path'
 import fs from 'fs'
 
+import { db } from '@/firebase.js'
+
 import osDataTemplate from '@/data/dataTemplate.js'
 
-const userDataPath = (electron.app || electron.remote.app).getPath('userData')
-var pathway = path.join(userDataPath, 'data.json')
+export default (username) => db.collection('users').doc(username).get().then(doc => {
+  return doc.data().asteroid
+})
 
-var data = parseDataFile(pathway)
+// const userDataPath = (electron.app || electron.remote.app).getPath('userData')
+// var pathway = path.join(userDataPath, 'data.json')
 
-function parseDataFile(filePath) {
-  try {
-    console.log(pathway)
-    return JSON.parse(fs.readFileSync(filePath))
-  } catch(error) {
-    console.log('Configuration file not found', error)
-    fs.writeFileSync(filePath, JSON.stringify(osDataTemplate))
-    return osDataTemplate
-  }
-}
+// var data = parseDataFile(pathway)
 
-export default data
+// function parseDataFile(filePath) {
+//   try {
+//     console.log(pathway)
+//     return JSON.parse(fs.readFileSync(filePath))
+//   } catch(error) {
+//     console.log('Configuration file not found', error)
+//     fs.writeFileSync(filePath, JSON.stringify(osDataTemplate))
+//     return osDataTemplate
+//   }
+// }
+
+// export default data
