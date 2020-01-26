@@ -1,6 +1,6 @@
 <template>
   <div class="setup index">
-    <v-card width="1000" class="window text-center" style="background-color: rgba(132, 0, 187, .8);">
+    <v-card width="1000" class="window text-center" style="background: rgba(132, 0, 187, .8);">
       <v-system-bar height="32" style="background-color: rgba(132, 0, 187, .8);">
         <span class="__style-appname">Apollo Installer</span>
         <v-spacer></v-spacer>

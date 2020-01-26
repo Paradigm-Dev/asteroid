@@ -10,16 +10,18 @@
       <span>Contacts</span>
     </div>
 
-    <v-card v-for="(app, index) in apps" :key="index" :width="app.config.width" class="window text-center" :id="app.index" :style="{ backgroundColor: app.config.color }">
+    <v-card v-for="(app, index) in apps" :key="index" :width="app.config.width" class="window text-center" :class="app.class" :style="{ backgroundColor: app.config.color }">
       <v-system-bar height="32" :style="{ backgroundColor: app.config.color }">
         <span class="__style-appname">{{ app.name }}</span>
         <v-spacer></v-spacer>
-        <v-btn x-small icon @click="$minimizeWindow()"><v-icon>mdi-minimize</v-icon></v-btn>
+        <v-btn x-small icon @click="closeApp(index)"><v-icon>mdi-minus</v-icon></v-btn>
+        <v-btn x-small icon @click="closeApp(index)"><v-icon>mdi-crop-square</v-icon></v-btn>
+        <v-btn x-small icon @click="closeApp(index)"><v-icon>mdi-close</v-icon></v-btn>
       </v-system-bar>
 
       <component :is="app.name"></component>
 
-      <v-card-actions :style="{ backgroundColor: app.config.color }">
+      <v-card-actions v-if="app.actions" :style="{ backgroundColor: app.config.color }">
         <!-- <v-btn :disabled="page >= 4 || page <= 1" @click="page >= 8 || page <= 1 ? console.log() : page -= 1" text color="blue lighten-2">Back</v-btn>
         <v-spacer></v-spacer>
         <v-btn @click="page >= 4 ? quit() : page += 1" text color="blue lighten-2">Next</v-btn> -->
@@ -30,6 +32,7 @@
 
 <script>
 import * as windowManager from '@/lifecycle/windowManager.js'
+
 import Moveable from 'moveable'
 
 export default {
@@ -41,22 +44,37 @@ export default {
   },
   methods: {
     openApp(app) {
+      this.refreshMoveable()
       if (!this.$root.data.apps[app]) {
         this.$root.data.apps[app] = {
+          actions: false,
           width: 500,
           color: 'rgba(72, 72, 72, .65)'
         }
       }
       windowManager.open(app, this.$root.data.apps[app])
+      this.apps = windowManager.apps
+      setTimeout(() => {
+        this.refreshMoveable()
+      }, 1)
+    },
+    closeApp(index) {
+      console.log('closing', index)
+      windowManager.close(index)
+      this.apps = []
+      setTimeout(() => {
+        this.apps = windowManager.apps
+        this.refreshMoveable()
+      }, 1)
     },
     refreshMoveable() {
       this.apps.forEach(app => {
         const moveable = new Moveable(document.body, {
-          target: document.querySelector(`#${app.index}`),
+          target: document.querySelector(`.${app.class}`),
           draggable: true,
           throttleDrag: 0,
           renderDirections: [],
-          // className: 'd-none',
+          className: 'd-none',
           origin: false
         })
 

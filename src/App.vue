@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <v-app-bar dense app style="background-color: rgba(72, 72, 72, .65);" v-if="$root.data.setup_completed">
+    <v-app-bar dense app style="background: rgba(72, 72, 72, .65);" v-if="$root.data.setup_completed">
       <v-app-bar-nav-icon @click="$root.launch_menu = !$root.launch_menu" v-model="$root.launch_menu"><v-icon>mdi-rocket</v-icon></v-app-bar-nav-icon>
       <v-toolbar-title>Asteroid</v-toolbar-title>
       <v-spacer></v-spacer>
@@ -112,5 +112,9 @@ export default {
 
 .v-card {
   border-radius: 10px;
+}
+
+.v-application {
+  background: none !important;
 }
 </style>

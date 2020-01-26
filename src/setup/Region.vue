@@ -47,6 +47,6 @@ export default {
 
 <style scoped>
 .v-list .v-sheet {
-  background-color: none;
+  background: none !important;
 }
 </style>
