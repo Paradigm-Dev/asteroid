@@ -10,7 +10,8 @@ export function open(app, config) {
     name: app,
     config: config,
     class: randomString(10),
-    visible: true
+    visible: true,
+    icon: `@/apps/${app}/icon.png`
   }
   apps.push(data)
 }
