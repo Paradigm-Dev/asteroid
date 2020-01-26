@@ -13,12 +13,8 @@
         </v-list-item>
 
         <v-list-item @click="$root.data.setup_completed = false">
-          <v-list-item-icon><v-icon>mdi-power-sleep</v-icon></v-list-item-icon>
+          <v-list-item-icon><v-icon>mdi-backup-restore</v-icon></v-list-item-icon>
           <v-list-item-title>Enter setup mode</v-list-item-title>
-        </v-list-item>
-        <v-divider></v-divider>
-        <v-list-item v-for="(app, index) in apps" :key="index">
-          <v-list-item-title>{{ app.name }}</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-menu>
