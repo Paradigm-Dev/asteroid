@@ -1,32 +1,32 @@
 <template>
-  <div class="desktop-wrapper">
-    <div @click="openApp('Calculator')" class="app-display" v-ripple>
-      <img src="@/apps/Calculator/icon.png">
-      <span>Calculator</span>
+  <div class="desktop">
+    <v-app-bar dense style="background: rgba(72, 72, 72, .8);">
+      <v-app-bar-nav-icon @click="$root.launch_menu = !$root.launch_menu" v-model="$root.launch_menu"><v-icon>mdi-rocket</v-icon></v-app-bar-nav-icon>
+      <v-toolbar-title>Asteroid</v-toolbar-title>
+      <v-spacer></v-spacer>
+      <v-btn icon @click="__winReload()"><v-icon>mdi-reload</v-icon></v-btn>
+    </v-app-bar>
+
+    <div class="desktop-wrapper">
+      <div @click="openApp('Calculator')" class="app-display" v-ripple>
+        <img src="@/apps/Calculator/icon.png">
+        <span>Calculator</span>
+      </div>
+
+      <div @click="openApp('Contacts')" class="app-display" v-ripple>
+        <img src="@/apps/Contacts/icon.png">
+        <span>Contacts</span>
+      </div>
+
+      <div @click="openApp('Satellite')" class="app-display" v-ripple>
+        <img src="@/apps/Satellite/icon.png">
+        <span>Satellite</span>
+      </div>
+
+      <div v-if="app.visible" v-for="(app, index) in apps" :key="index" class="window" :class="app.class">
+        <component :app="app" :is="app.name"></component>
+      </div>
     </div>
-
-    <div @click="openApp('Contacts')" class="app-display" v-ripple>
-      <img src="@/apps/Contacts/icon.png">
-      <span>Contacts</span>
-    </div>
-
-    <v-card v-for="(app, index) in apps" :key="index" :width="app.config.width" class="window text-center" :class="app.class" :style="{ backgroundColor: app.config.color }">
-      <v-system-bar height="32" :style="{ backgroundColor: app.config.color }">
-        <span class="__style-appname">{{ app.name }}</span>
-        <v-spacer></v-spacer>
-        <v-btn x-small icon @click="closeApp(index)"><v-icon>mdi-minus</v-icon></v-btn>
-        <v-btn x-small icon @click="closeApp(index)"><v-icon>mdi-crop-square</v-icon></v-btn>
-        <v-btn x-small icon @click="closeApp(index)"><v-icon>mdi-close</v-icon></v-btn>
-      </v-system-bar>
-
-      <component :is="app.name"></component>
-
-      <v-card-actions v-if="app.actions" :style="{ backgroundColor: app.config.color }">
-        <!-- <v-btn :disabled="page >= 4 || page <= 1" @click="page >= 8 || page <= 1 ? console.log() : page -= 1" text color="blue lighten-2">Back</v-btn>
-        <v-spacer></v-spacer>
-        <v-btn @click="page >= 4 ? quit() : page += 1" text color="blue lighten-2">Next</v-btn> -->
-      </v-card-actions>
-    </v-card>
   </div>
 </template>
 
@@ -34,15 +34,20 @@
 import * as windowManager from '@/lifecycle/windowManager.js'
 
 import Moveable from 'moveable'
+import { remote } from 'electron'
 
 export default {
   data() {
     return {
+      win: remote.getCurrentWindow(),
       document: document,
       apps: windowManager.apps
     }
   },
   methods: {
+    __winReload() {
+      this.win.reload()
+    },
     openApp(app) {
       this.refreshMoveable()
       if (!this.$root.data.apps[app]) {
@@ -55,15 +60,6 @@ export default {
       windowManager.open(app, this.$root.data.apps[app])
       this.apps = windowManager.apps
       setTimeout(() => {
-        this.refreshMoveable()
-      }, 1)
-    },
-    closeApp(index) {
-      console.log('closing', index)
-      windowManager.close(index)
-      this.apps = []
-      setTimeout(() => {
-        this.apps = windowManager.apps
         this.refreshMoveable()
       }, 1)
     },
@@ -96,13 +92,16 @@ export default {
 
 <style scoped>
 .desktop-wrapper {
+  padding: 24px;
+}
+
+.desktop {
   background: url('./../assets/default_backdrop.jpg');
   background-size: cover;
   background-attachment: fixed;
-  background-position: center; 
+  background-position: center;
   height: 100%;
   width: 100%;
-  padding: 24px;
 }
 
 .app-display {

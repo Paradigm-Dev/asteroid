@@ -46,7 +46,7 @@ export default {
 </script>
 
 <style scoped>
-.v-list .v-sheet {
+.v-list {
   background: none !important;
 }
 </style>
