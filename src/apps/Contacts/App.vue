@@ -93,6 +93,6 @@ export default {
 
 <style scoped>
 .v-list {
-  background: rgba(72, 72, 72, .8) !important;
+  background: rgba(161, 147, 111, .8) !important;
 }
 </style>

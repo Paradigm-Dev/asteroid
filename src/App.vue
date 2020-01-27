@@ -12,9 +12,9 @@
           <v-list-item-title>Sleep</v-list-item-title>
         </v-list-item>
 
-        <v-list-item @click="$root.logged_in = false">
+        <v-list-item @click="signOut()">
           <v-list-item-icon><v-icon>mdi-logout-variant</v-icon></v-list-item-icon>
-          <v-list-item-title>Logout</v-list-item-title>
+          <v-list-item-title>Sign out</v-list-item-title>
         </v-list-item>
 
         <v-list-item @click="$root.data.setup_completed = false">
@@ -72,6 +72,7 @@ import Login from './components/Login'
 import { remote } from 'electron'
 import moment from 'moment'
 
+import { db, auth } from '@/firebase.js'
 import * as windowManager from '@/lifecycle/windowManager.js'
 import OSBootData from './lifecycle/getOSData.js'
 import AsteroidAutomatedSetupProcess from './setup/Index.vue'
@@ -105,9 +106,28 @@ export default {
 			this.date = moment(today).format('MMMM Do, YYYY')
 			this.time = moment(today).format('LTS')
 			setTimeout(this.startTime, 500)
+    },
+    signOut() {
+			db.collection('users').doc(this.$root.data.username).update({ isLoggedIn: false }).then(() => {
+				auth.signOut().then(() => {
+          this.$root.user = null
+          this.$root.data = {}
+        }).catch(error => this.$notify(error.message))
+			}).catch(error => this.$notify(error.message))
 		}
   },
   created() {
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        db.collection('users').doc(user.email.substring(0, user.email.lastIndexOf("@"))).get().then(doc => {
+          this.$root.user = doc.data()
+          this.$root.data = doc.data().asteroid
+          this.$root.data.username = user.email.substring(0, user.email.lastIndexOf("@"))
+        })
+      } else {
+        this.$root.user = null
+      }
+    })
     this.startTime()
   }
 }
@@ -115,7 +135,7 @@ export default {
 
 <style>
 .setup-bg {
-  background: url('./assets/setup_bg.png');
+  background: url('./assets/setup_bg.jpg');
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-size: cover;

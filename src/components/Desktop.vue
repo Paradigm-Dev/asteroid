@@ -1,18 +1,11 @@
 <template>
   <div class="desktop">
-    <v-app-bar dense style="background: rgba(72, 72, 72, .8); z-index: 100000;">
+    <v-app-bar dense style="background: rgba(82, 82, 102, .8); z-index: 100000;">
       <v-app-bar-nav-icon @click="$root.launch_menu = !$root.launch_menu" v-model="$root.launch_menu"><v-avatar :src="picURLresolve"></v-avatar></v-app-bar-nav-icon>
-      <v-toolbar-title>
-        <v-list-item class="pa-0">
-          <v-list-item-content>
-            <v-list-item-title>{{ $root.data.given_name }}</v-list-item-title>
-            <v-list-item-subtitle>{{ $root.data.username }}</v-list-item-subtitle>
-          </v-list-item-content>
-        </v-list-item>
-      </v-toolbar-title>
-      <v-divider vertical inset class="mr-4"></v-divider>
+      <v-toolbar-title class="font-weight-medium text-uppercase" :style="{ color: $root.user.color }">{{ $root.data.username }}</v-toolbar-title>
+      <v-divider vertical inset class="ml-8 mr-4"></v-divider>
       <v-fade-transition group>
-        <v-btn text @click="unminimizeApp(app)" v-for="(app, index) in minimized" :key="index">{{ app.name }}</v-btn>
+        <v-btn :color="app.config.color" text @click="unminimizeApp(app)" v-for="(app, index) in minimized" :key="index">{{ app.name }}</v-btn>
       </v-fade-transition>
       <v-spacer></v-spacer>
       <v-btn icon @click="winManReload()"><v-icon>mdi-dock-window</v-icon></v-btn>
@@ -74,7 +67,8 @@ export default {
   },
   computed: {
     picURLresolve() {
-      return `https://relay.theparadigmdev.com/profile-pics/${this.$root.user.pic}.jpg`
+      var url = 'https://relay.theparadigmdev.com/profile-pics/' + this.$root.user.pic + '.jpg'
+      return url
     }
   },
   methods: {

@@ -2,17 +2,17 @@
   <div class="login index">
     <div class="accounts">
       <h1 class="display-1">Welcome!</h1>
-      <p class="title font-weight-light">Click on your user</p>
+      <p class="title font-weight-light">Login in to continue</p>
 
-      <v-card width="500" class="window text-center" style="background: rgba(0, 81, 187, .8)">
+      <v-card width="500" class="window text-center mt-8" style="background: rgba(49, 50, 105, .8)">
         <v-card-text class="text-left pb-0 mb-0">
           <v-text-field v-model="username" label="Username"></v-text-field>
-          <v-text-field type="password" v-model="password" label="Password"></v-text-field>
+          <v-text-field @keypress.enter="signIn()" type="password" v-model="password" label="Password"></v-text-field>
         </v-card-text>
 
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn :disabled="!password" text color="green" @click="login()">Login</v-btn>
+          <v-btn :disabled="!password" text color="white" @click="signIn()">Login</v-btn>
         </v-card-actions>
       </v-card>
     </div>
@@ -57,7 +57,7 @@ export default {
         target.style.transform = `translate(${beforeTranslate[0]}px, ${beforeTranslate[1]}px)`
       }).on("dragEnd", ({ target, isDrag, clientX, clientY }) => {})
     },
-    login() {
+    signIn() {
       auth.signInWithEmailAndPassword(`${this.username}@theparadigmdev.com`, this.password).then(() => {
         db.collection('users').doc(this.username).get().then(doc => {
           this.$root.user = doc.data()
