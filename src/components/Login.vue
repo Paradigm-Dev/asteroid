@@ -4,7 +4,7 @@
       <h1 class="display-1">Welcome!</h1>
       <p class="title font-weight-light">Login in to continue</p>
 
-      <v-card width="400" class="window text-center mt-8" style="background: rgba(49, 50, 105, .8)">
+      <v-card width="400" class="window text-center mt-8" style="background: rgba(20, 35, 90, .8)">
         <v-card-text class="text-left pb-0 mb-0">
           <v-text-field v-model="username" label="Username"></v-text-field>
           <v-text-field @keypress.enter="signIn()" type="password" v-model="password" label="Password"></v-text-field>

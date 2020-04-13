@@ -22,7 +22,9 @@ new Vue({
     return {
       launch_menu: false,
       user: null,
-      data: {}
+      data: {
+        username: ''
+      }
     }
   }
 }).$mount('#app')
