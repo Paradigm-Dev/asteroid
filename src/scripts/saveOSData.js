@@ -1,15 +1,14 @@
-import electron from 'electron'
-import fs from 'fs'
-import path from 'path'
-import { db } from '@/firebase.js'
+// import electron from "electron";
+// import fs from "fs";
+// import path from "path";
+import axios from "axios";
 
-export default (username, newUserData) => {
-  db.collection('users').doc(username).update({
-    asteroid: newUserData
-  }).then(() => {
-    return true
-  }).catch(error => {
-    console.error(error)
-    return false
-  })
-}
+export default (uid, newUserData) => {
+  axios
+    .post(`https://www.theparadigmdev.com/api/asteroid/${uid}`, {
+      uid,
+      data: newUserData
+    })
+    .then(response => {})
+    .catch(error => console.error(error));
+};

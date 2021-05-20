@@ -1,18 +1,21 @@
-import Vue from 'vue'
-import App from './App.vue'
-import store from './store'
-import vuetify from './plugins/vuetify'
-import saveOSData from '@/scripts/saveOSData.js'
+import Vue from "vue";
+import App from "./App.vue";
+import store from "./store";
+import vuetify from "./plugins/vuetify";
+import axios from "axios";
 
-Vue.config.productionTip = false
+import saveOSData from "@/scripts/saveOSData.js";
+
+Vue.prototype.$http = axios;
+Vue.config.productionTip = false;
 
 Vue.mixin({
   methods: {
     $saveData() {
-      saveOSData(this.$root.data)
+      saveOSData(this.$root.user._id, this.$root.data);
     }
   }
-})
+});
 
 new Vue({
   store,
@@ -20,11 +23,9 @@ new Vue({
   render: h => h(App),
   data() {
     return {
-      launch_menu: false,
-      user: null,
-      data: {
-        username: ''
-      }
-    }
+      user: false,
+      data: false,
+      launch_menu: false
+    };
   }
-}).$mount('#app')
+}).$mount("#app");

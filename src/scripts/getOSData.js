@@ -1,14 +1,16 @@
-import electron from 'electron'
-import path from 'path'
-import fs from 'fs'
+// import electron from 'electron'
+// import path from 'path'
+// import fs from 'fs'
+import axios from "axios";
 
-import { db } from '@/firebase.js'
-
-import osDataTemplate from '@/data/dataTemplate.js'
-
-export default (username) => db.collection('users').doc(username).get().then(doc => {
-  return doc.data().asteroid
-})
+export default uid => {
+  axios
+    .get(`https://www.theparadigmdev.com/api/asteroid/${uid}`)
+    .then(response => {
+      return response.data;
+    })
+    .catch(error => console.error(error));
+};
 
 // const userDataPath = (electron.app || electron.remote.app).getPath('userData')
 // var pathway = path.join(userDataPath, 'data.json')

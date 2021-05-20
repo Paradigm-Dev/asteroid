@@ -1,18 +1,29 @@
 <template>
   <div>
-    <v-card :width="app.config.width" class="text-center" :style="{ backgroundColor: app.config.color }">
+    <v-card
+      :width="app.config.width"
+      class="text-center"
+      :style="{ backgroundColor: app.config.color }"
+    >
       <v-system-bar height="32" :style="{ backgroundColor: app.config.color }">
         <span class="__style-appname">{{ app.name }}</span>
         <v-spacer></v-spacer>
-        <v-btn x-small icon @click="minimizeApp()"><v-icon class="mr-0">mdi-minus</v-icon></v-btn>
-        <v-btn x-small icon @click="closeApp()"><v-icon class="mr-0">mdi-crop-square</v-icon></v-btn>
-        <v-btn x-small icon @click="closeApp()"><v-icon class="mr-0">mdi-close</v-icon></v-btn>
+        <v-btn x-small icon @click="minimizeApp()"
+          ><v-icon class="mr-0">mdi-minus</v-icon></v-btn
+        >
+        <v-btn x-small icon @click="closeApp()"
+          ><v-icon class="mr-0">mdi-crop-square</v-icon></v-btn
+        >
+        <v-btn x-small icon @click="closeApp()"
+          ><v-icon class="mr-0">mdi-close</v-icon></v-btn
+        >
       </v-system-bar>
 
       <v-container fluid class="pb-0">
         <v-row>
           <v-col sm="12">
-            <span v-for="(item, index) in history" :key="index">{{ item }}</span><br>
+            <span v-for="(item, index) in history" :key="index">{{ item }}</span
+            ><br />
             <span class="display-1">{{ current }}</span>
             <span>{{ answer }}</span>
           </v-col>
@@ -52,78 +63,77 @@
 </template>
 
 <script>
-import * as windowManager from '@/lifecycle/windowManager.js'
+import * as windowManager from "@/scripts/windowManager.js";
 
 export default {
-  name: 'Calculator',
-  props: [ 'app' ],
+  name: "Calculator",
+  props: ["app"],
   data() {
     return {
       history: [],
-      previous: '0',
-      current: '',
-      answer: ''
-    }
+      previous: "0",
+      current: "",
+      answer: "",
+    };
   },
   methods: {
     ac() {
-      this.history = []
-      this.previous = '0'
-      this.current = ''
-      this.answer = ''
+      this.history = [];
+      this.previous = "0";
+      this.current = "";
+      this.answer = "";
     },
     add() {
-      this.history.push(this.current, '+')
-      this.answer = parseInt(this.previous) + parseInt(this.current)
-      this.previous = this.current
-      this.current = ''
+      this.history.push(this.current, "+");
+      this.answer = parseInt(this.previous) + parseInt(this.current);
+      this.previous = this.current;
+      this.current = "";
     },
     sub() {
-      this.history.push(this.current, '−')
-      this.answer = parseInt(this.previous) - parseInt(this.current)
-      this.previous = this.current
-      this.current = ''
+      this.history.push(this.current, "−");
+      this.answer = parseInt(this.previous) - parseInt(this.current);
+      this.previous = this.current;
+      this.current = "";
     },
     mult() {
-      this.history.push(this.current, '×')
-      this.answer = parseInt(this.previous) * parseInt(this.current)
-      this.previous = this.current
-      this.current = ''
+      this.history.push(this.current, "×");
+      this.answer = parseInt(this.previous) * parseInt(this.current);
+      this.previous = this.current;
+      this.current = "";
     },
     div() {
-      this.history.push(this.current, '÷')
-      this.answer = parseInt(this.previous) / parseInt(this.current)
-      this.previous = this.current
-      this.current = ''
+      this.history.push(this.current, "÷");
+      this.answer = parseInt(this.previous) / parseInt(this.current);
+      this.previous = this.current;
+      this.current = "";
     },
     solve() {
-      this.history.push(this.current, '=')
-      this.answer = parseInt(this.previous) / parseInt(this.current)
-      this.current = this.answer
-      this.answer = ''
+      this.history.push(this.current, "=");
+      this.answer = parseInt(this.previous) / parseInt(this.current);
+      this.current = this.answer;
+      this.answer = "";
     },
     closeApp() {
-      var thisApp = this.app
+      var thisApp = this.app;
       function findAppIndex(app) {
-        return app == thisApp
+        return app == thisApp;
       }
-      var index = windowManager.apps.findIndex(findAppIndex)
-      console.log('closing', index)
-      windowManager.close(index)
+      var index = windowManager.apps.findIndex(findAppIndex);
+      console.log("closing", index);
+      windowManager.close(index);
     },
     minimizeApp() {
-      var thisApp = this.app
+      var thisApp = this.app;
       function findAppIndex(app) {
-        return app == thisApp
+        return app == thisApp;
       }
-      var index = windowManager.apps.findIndex(findAppIndex)
-      console.log('minimizing', index)
-      windowManager.minimize(index)
-    }
-  }
-}
+      var index = windowManager.apps.findIndex(findAppIndex);
+      console.log("minimizing", index);
+      windowManager.minimize(index);
+    },
+  },
+};
 </script>
 
 <style scoped>
-
 </style>

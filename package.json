@@ -1,32 +1,34 @@
 {
-  "name": "asteroid",
-  "version": "0.0.1",
+  "name": "newasteroid",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
-    "build": "npx vue-cli-service electron:build",
-    "serve": "npx vue-cli-service electron:serve",
-    "postinstall": "npx electron-builder install-app-deps",
-    "postuninstall": "npx electron-builder install-app-deps"
+    "build": "vue-cli-service electron:build",
+    "serve": "vue-cli-service electron:serve",
+    "postinstall": "electron-builder install-app-deps",
+    "postuninstall": "electron-builder install-app-deps"
   },
   "main": "background.js",
   "dependencies": {
-    "core-js": "^2.6.11",
-    "firebase": "^7.7.0",
-    "moment": "^2.24.0",
-    "moveable": "^0.13.4",
+    "axios": "^0.21.1",
+    "core-js": "^3.6.5",
+    "moment": "^2.29.1",
+    "moveable": "^0.23.0",
     "vue": "^2.6.11",
-    "vuetify": "^2.2.6",
-    "vuex": "^3.1.2"
+    "vuetify": "^2.4.0",
+    "vuex": "^3.4.0"
   },
   "devDependencies": {
-    "@vue/cli-plugin-babel": "^3.12.1",
-    "@vue/cli-service": "^4.1.2",
-    "electron": "^6.1.7",
-    "sass": "^1.25.0",
-    "sass-loader": "^7.1.0",
-    "vue-cli-plugin-electron-builder": "^1.4.4",
-    "vue-cli-plugin-vuetify": "^0.6.3",
+    "@vue/cli-plugin-babel": "~4.5.0",
+    "@vue/cli-plugin-vuex": "~4.5.0",
+    "@vue/cli-service": "~4.5.0",
+    "electron": "^11.0.0",
+    "electron-devtools-installer": "^3.1.0",
+    "sass": "^1.32.0",
+    "sass-loader": "^10.0.0",
+    "vue-cli-plugin-electron-builder": "~2.0.0-rc.6",
+    "vue-cli-plugin-vuetify": "~2.1.0",
     "vue-template-compiler": "^2.6.11",
-    "vuetify-loader": "^1.4.3"
+    "vuetify-loader": "^1.7.0"
   }
 }

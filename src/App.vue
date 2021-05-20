@@ -13,129 +13,155 @@
         </v-list-item>
 
         <v-list-item @click="signOut()">
-          <v-list-item-icon><v-icon>mdi-logout-variant</v-icon></v-list-item-icon>
+          <v-list-item-icon
+            ><v-icon>mdi-logout-variant</v-icon></v-list-item-icon
+          >
           <v-list-item-title>Sign out</v-list-item-title>
         </v-list-item>
 
         <v-list-item @click="$root.data.setup_completed = false">
-          <v-list-item-icon><v-icon>mdi-backup-restore</v-icon></v-list-item-icon>
+          <v-list-item-icon
+            ><v-icon>mdi-backup-restore</v-icon></v-list-item-icon
+          >
           <v-list-item-title>Enter setup mode</v-list-item-title>
         </v-list-item>
       </v-list>
     </v-menu>
 
-    <div v-if="$root.user" style="height: 100vh;">
-      <v-content style="height: 100vh;">
+    <div v-if="$root.user" style="height: 100vh">
+      <v-main style="height: 100vh" v-if="$root.user.asteroid.setup">
         <Desktop />
-      </v-content>
+      </v-main>
 
-      <!-- <v-content v-if="!$root.user.asteroid.setup">
+      <v-main v-if="!$root.user.asteroid.setup">
         <div class="fill-height setup-bg">
           <p class="pt-4 pl-4">
-            <span class="title font-weight-medium">{{ time }}</span><br>
+            <span class="title font-weight-medium">{{ time }}</span
+            ><br />
             <span class="font-weight-light">{{ date }}</span>
           </p>
 
-          <p style="position: absolute; top: 16px; right: 16px; text-align: right;">
-            <span class="font-weight-medium">Paradigm Asteroid</span><br>
+          <p
+            style="
+              position: absolute;
+              top: 16px;
+              right: 16px;
+              text-align: right;
+            "
+          >
+            <span class="font-weight-medium">Paradigm Asteroid</span><br />
             <span class="font-weight-light">Voyager Build 1</span>
           </p>
-          <img @click="__winReload()" src="@/assets/logo.png" style="position: absolute; bottom: 12px; left: 12px;">
+          <img
+            @click="__winReload()"
+            src="@/assets/logo.png"
+            style="position: absolute; bottom: 12px; left: 12px; height: 100px"
+          />
           <AsteroidAutomatedSetupProcess />
         </div>
-      </v-content> -->
+      </v-main>
     </div>
 
-    <v-content v-else style="height: 100vh;">
+    <v-main v-else style="height: 100vh">
       <div class="fill-height setup-bg">
         <p class="pt-4 pl-4">
-          <span class="title font-weight-medium">{{ time }}</span><br>
+          <span class="title font-weight-medium">{{ time }}</span
+          ><br />
           <span class="font-weight-light">{{ date }}</span>
         </p>
 
-        <p style="position: absolute; top: 16px; right: 16px; text-align: right;">
-          <span class="font-weight-medium">Paradigm Asteroid</span><br>
+        <p
+          style="position: absolute; top: 16px; right: 16px; text-align: right"
+        >
+          <span class="font-weight-medium">Paradigm Asteroid</span><br />
           <span class="font-weight-light">Voyager Build 1</span>
         </p>
-        <img @click="__winReload()" src="@/assets/logo.png" style="position: absolute; bottom: 12px; left: 12px;">
+        <img
+          @click="__winReload()"
+          src="@/assets/logo.png"
+          style="position: absolute; bottom: 12px; left: 12px; height: 100px"
+        />
         <Login />
       </div>
-    </v-content>
-
+    </v-main>
   </v-app>
 </template>
 
 <script>
-import Desktop from './components/Desktop'
-import Login from './components/Login'
+import { remote } from "electron";
+import moment from "moment";
 
-import { remote } from 'electron'
-import moment from 'moment'
+import Desktop from "./components/Desktop";
+import Login from "./components/Login";
 
-import { db, auth } from '@/firebase.js'
-import * as windowManager from '@/lifecycle/windowManager.js'
-import OSBootData from './lifecycle/getOSData.js'
-import AsteroidAutomatedSetupProcess from './setup/Index.vue'
+import * as windowManager from "@/scripts/windowManager.js";
+import getOSData from "@/scripts/getOSData.js";
+import AsteroidAutomatedSetupProcess from "./setup/Index.vue";
 
 export default {
-  name: 'App',
+  name: "App",
   components: {
-    Desktop, Login, AsteroidAutomatedSetupProcess
+    Desktop,
+    Login,
+    AsteroidAutomatedSetupProcess,
   },
   data() {
     return {
       console: console,
       win: remote.getCurrentWindow(),
-      time: moment(Date.now()).format('LT'),
-      date: moment(Date.now()).format('dddd, MMMM Do, YYYY'),
-      apps: windowManager.apps
-    }
+      time: moment(Date.now()).format("LT"),
+      date: moment(Date.now()).format("dddd, MMMM Do, YYYY"),
+      apps: windowManager.apps,
+    };
   },
   methods: {
     __winClose() {
-      this.win.close()
+      this.win.close();
     },
     __winMinimize() {
-      this.win.minimize()
+      this.win.minimize();
     },
     __winReload() {
-      this.win.reload()
+      this.win.reload();
     },
     startTime() {
-			var today = new Date()
-			this.date = moment(today).format('MMMM Do, YYYY')
-			this.time = moment(today).format('LTS')
-			setTimeout(this.startTime, 500)
+      var today = new Date();
+      this.date = moment(today).format("MMMM Do, YYYY");
+      this.time = moment(today).format("LTS");
+      setTimeout(this.startTime, 500);
     },
-    signOut() {
-			db.collection('users').doc(this.$root.data.username).update({ isLoggedIn: false }).then(() => {
-				auth.signOut().then(() => {
-          this.$root.user = null
-          this.$root.data = {}
-        }).catch(error => this.$notify(error.message))
-			}).catch(error => this.$notify(error.message))
-		}
+    //   signOut() {
+    // 		db.collection('users').doc(this.$root.data.username).update({ isLoggedIn: false }).then(() => {
+    // 			auth.signOut().then(() => {
+    //         this.$root.user = null
+    //         this.$root.data = {}
+    //       }).catch(error => this.$notify(error.message))
+    // 		}).catch(error => this.$notify(error.message))
+    // 	}
+    // },
+    // created() {
+    //   auth.onAuthStateChanged(user => {
+    //     if (user) {
+    //       db.collection('users').doc(user.email.substring(0, user.email.lastIndexOf("@"))).get().then(doc => {
+    //         this.$root.user = doc.data()
+    //         this.$root.data = doc.data().asteroid
+    //         this.$root.data.username = user.email.substring(0, user.email.lastIndexOf("@"))
+    //       })
+    //     } else {
+    //       this.$root.user = null
+    //     }
+    //   })
+    //   this.startTime()
   },
   created() {
-    auth.onAuthStateChanged(user => {
-      if (user) {
-        db.collection('users').doc(user.email.substring(0, user.email.lastIndexOf("@"))).get().then(doc => {
-          this.$root.user = doc.data()
-          this.$root.data = doc.data().asteroid
-          this.$root.data.username = user.email.substring(0, user.email.lastIndexOf("@"))
-        })
-      } else {
-        this.$root.user = null
-      }
-    })
-    this.startTime()
-  }
-}
+    this.startTime();
+  },
+};
 </script>
 
 <style>
 .setup-bg {
-  background: url('./assets/setup_bg.jpg');
+  background: url("./assets/setup_bg.jpg");
   background-attachment: fixed;
   background-repeat: no-repeat;
   background-size: cover;
